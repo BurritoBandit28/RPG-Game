@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bciaiqlykyb4q"]
+
+[ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/test/front.png" id="1_bkmkx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivi"]
+size = Vector2(20, 23)
+
+[node name="NPC" type="NPC"]
+name = &"Jerry"
+character = &"Joyfull Elf"
+position = Vector2(-22, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_eyivi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bkmkx")

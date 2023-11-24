@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwcnmnhvfymht"]
+
+[ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/test/front.png" id="1_shouq"]
+[ext_resource type="Script" path="res://assets/scripts/player/raycast.gd" id="2_nck5m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivi"]
+size = Vector2(20, 23)
+
+[node name="Player" type="Player"]
+position = Vector2(1, 0)
+mass = 1000.0
+gravity_scale = 0.0
+lock_rotation = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_eyivi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_shouq")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 23)
+script = ExtResource("2_nck5m")
+
+[connection signal="raycast_signal" from="." to="RayCast2D" method="_on_player_raycast_signal"]
