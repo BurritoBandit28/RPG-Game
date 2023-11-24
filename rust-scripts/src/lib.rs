@@ -1,5 +1,5 @@
-mod player;
 mod npc;
+mod player;
 
 use godot::prelude::*;
 
