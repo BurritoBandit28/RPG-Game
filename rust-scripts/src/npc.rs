@@ -1,13 +1,15 @@
 use godot::engine::{IStaticBody2D, StaticBody2D};
 use godot::prelude::*;
 
+
 #[derive(GodotClass)]
+// TODO - have npc + future interactable elements extend a common custom class, and not StaticBody2D
 #[class(base=StaticBody2D)]
 pub struct NPC {
     #[export]
-    name: StringName,
+    name: GString,
     #[export]
-    character: StringName,
+    character: GString,
     #[base]
     sb: Base<StaticBody2D>,
 }
@@ -16,8 +18,8 @@ pub struct NPC {
 impl IStaticBody2D for NPC {
     fn init(sb: Base<StaticBody2D>) -> Self {
         Self {
-            name: StringName::default(),
-            character: StringName::default(),
+            name: GString::default(),
+            character: GString::default(),
             sb,
         }
     }

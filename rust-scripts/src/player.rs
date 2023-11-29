@@ -11,11 +11,17 @@ use std::str::FromStr;
 #[derive(GodotClass)]
 #[class(base=RigidBody2D)]
 struct Player {
+    #[export]
     speed: f32,
+    #[export]
     sprint: f32,
     #[base]
     rb: Base<RigidBody2D>,
     facing: Facing,
+    #[export]
+    name : GString,
+    #[export]
+    adjective : GString
 }
 
 #[godot_api]
@@ -27,6 +33,8 @@ impl IRigidBody2D for Player {
             sprint: 95.0,
             rb,
             facing: Facing::RIGHT,
+            name : GString::from("Jilly Tismond"),
+            adjective : GString::from("Brave")
         }
     }
 
@@ -58,7 +66,8 @@ impl IRigidBody2D for Player {
             (*self).facing = Facing::UP;
         }
         if Input::is_action_pressed(&input, StringName::from_str("interact").unwrap()) {
-            self.raycast()
+            self.raycast();
+            godot_print!("{}", self.get_player_name())
         }
         vel.normalized();
         self.rb.set_linear_velocity(vel)
@@ -72,6 +81,17 @@ impl Player {
             "raycast_signal".into(),
             &[Variant::from(self.facing.to_godot())],
         );
+    }
+
+    #[func]
+    fn get_player_name(&mut self) -> GString {
+        return GString::from(format!("{} the {}", self.name, self.adjective))
+    }
+
+    #[func]
+    fn set_player_name(&mut self, nname : GString, nadjective : GString) {
+        self.name = nname;
+        self.adjective = nadjective
     }
 
     #[signal]
