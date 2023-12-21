@@ -1,5 +1,7 @@
 mod npc;
 mod player;
+mod interactable;
+mod button;
 
 use godot::prelude::*;
 

@@ -1,0 +1,104 @@
+[gd_scene load_steps=16 format=3 uid="uid://85w7afrak577"]
+
+[ext_resource type="Texture2D" uid="uid://bykfknutaejdl" path="res://assets/sprites/tile-sheet/grass.png" id="1_idpok"]
+[ext_resource type="Texture2D" uid="uid://dnqs8l06ynimd" path="res://assets/sprites/menu/play.png" id="2_nasq5"]
+[ext_resource type="Texture2D" uid="uid://hcmwrhxnijb3" path="res://assets/sprites/menu/play_grass.png" id="3_8452y"]
+[ext_resource type="Texture2D" uid="uid://mop24fyfd7by" path="res://assets/sprites/menu/options.png" id="4_788gu"]
+[ext_resource type="Texture2D" uid="uid://bq8lgnqmi52r8" path="res://assets/sprites/menu/play_hovered.png" id="4_lg1v0"]
+[ext_resource type="Texture2D" uid="uid://ddodxnxmb60m6" path="res://assets/sprites/menu/options_grass.png" id="5_wh3k5"]
+[ext_resource type="Texture2D" uid="uid://dql5qrtnybxjg" path="res://assets/sprites/menu/quit.png" id="6_wiwnd"]
+[ext_resource type="Texture2D" uid="uid://c73pxoqgoxy5v" path="res://assets/sprites/menu/quit_grass.png" id="7_ukoe1"]
+[ext_resource type="Texture2D" uid="uid://bb2r68fu53fjy" path="res://assets/sprites/menu/options_hovered.png" id="7_xxc38"]
+[ext_resource type="Texture2D" uid="uid://djx845fy1kwlv" path="res://assets/sprites/menu/quit_hovered.png" id="10_ahcjc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbrpb"]
+texture = ExtResource("1_idpok")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_embtc"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_vbrpb")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qb7cw"]
+size = Vector2(48, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chg0h"]
+size = Vector2(73, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3trrv"]
+size = Vector2(37, 20)
+
+[node name="Menu" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_embtc")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65538, 0, 0, -2, 0, 0, 65534, 0, 0, 131070, 0, 0, 196606, 0, 0, 262142, 0, 0, 327678, 0, 0, -65537, 0, 0, -1, 0, 0, 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, 262143, 0, 0, 327679, 0, 0, -131072, 0, 0, -65536, 0, 0, 0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, -131071, 0, 0, -65535, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, -131070, 0, 0, -65534, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, -131069, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, -131068, 0, 0, -65532, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, -327686, 0, 0, -262150, 0, 0, -196614, 0, 0, -131078, 0, 0, -65542, 0, 0, -6, 0, 0, 65530, 0, 0, 131066, 0, 0, 196602, 0, 0, 262138, 0, 0, 327674, 0, 0, 393210, 0, 0, 458746, 0, 0, -327685, 0, 0, -262149, 0, 0, -196613, 0, 0, -131077, 0, 0, -65541, 0, 0, -5, 0, 0, 65531, 0, 0, 131067, 0, 0, 196603, 0, 0, 262139, 0, 0, 327675, 0, 0, 393211, 0, 0, 458747, 0, 0, -327684, 0, 0, -262148, 0, 0, -196612, 0, 0, -131076, 0, 0, -65540, 0, 0, -4, 0, 0, 65532, 0, 0, 131068, 0, 0, 196604, 0, 0, 262140, 0, 0, 327676, 0, 0, 393212, 0, 0, 458748, 0, 0, -327683, 0, 0, -262147, 0, 0, -196611, 0, 0, -131075, 0, 0, -65539, 0, 0, -3, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, 262141, 0, 0, 327677, 0, 0, 393213, 0, 0, 458749, 0, 0, -327682, 0, 0, -262146, 0, 0, -196610, 0, 0, -131074, 0, 0, 393214, 0, 0, 458750, 0, 0, -327681, 0, 0, -262145, 0, 0, -196609, 0, 0, -131073, 0, 0, 393215, 0, 0, 458751, 0, 0, -393216, 0, 0, -327680, 0, 0, -262144, 0, 0, -196608, 0, 0, 327680, 0, 0, 393216, 0, 0, -393215, 0, 0, -327679, 0, 0, -262143, 0, 0, -196607, 0, 0, 327681, 0, 0, 393217, 0, 0, -393214, 0, 0, -327678, 0, 0, -262142, 0, 0, -196606, 0, 0, 327682, 0, 0, 393218, 0, 0, -393213, 0, 0, -327677, 0, 0, -262141, 0, 0, -196605, 0, 0, 327683, 0, 0, 393219, 0, 0, -393212, 0, 0, -327676, 0, 0, -262140, 0, 0, -196604, 0, 0, 327684, 0, 0, 393220, 0, 0, -393211, 0, 0, -327675, 0, 0, -262139, 0, 0, -196603, 0, 0, -131067, 0, 0, -65531, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, -393210, 0, 0, -327674, 0, 0, -262138, 0, 0, -196602, 0, 0, -131066, 0, 0, -65530, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, -393209, 0, 0, -327673, 0, 0, -262137, 0, 0, -196601, 0, 0, -131065, 0, 0, -65529, 0, 0, 7, 0, 0, 65543, 0, 0, 131079, 0, 0, 196615, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="Buttons" type="Node" parent="."]
+
+[node name="Play" type="UIButton" parent="Buttons"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Play"]
+shape = SubResource("RectangleShape2D_qb7cw")
+
+[node name="button" type="Sprite2D" parent="Buttons/Play"]
+texture = ExtResource("2_nasq5")
+
+[node name="grass" type="Sprite2D" parent="Buttons/Play"]
+texture = ExtResource("3_8452y")
+
+[node name="hovered" type="Sprite2D" parent="Buttons/Play"]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("4_lg1v0")
+
+[node name="Options" type="UIButton" parent="Buttons"]
+button_types = "options"
+position = Vector2(0, 25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Options"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_chg0h")
+
+[node name="button" type="Sprite2D" parent="Buttons/Options"]
+texture = ExtResource("4_788gu")
+
+[node name="grass" type="Sprite2D" parent="Buttons/Options"]
+texture = ExtResource("5_wh3k5")
+
+[node name="hovered" type="Sprite2D" parent="Buttons/Options"]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("7_xxc38")
+
+[node name="Quit" type="UIButton" parent="Buttons"]
+button_types = "quit"
+position = Vector2(0, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Quit"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_3trrv")
+
+[node name="button" type="Sprite2D" parent="Buttons/Quit"]
+texture = ExtResource("6_wiwnd")
+
+[node name="grass" type="Sprite2D" parent="Buttons/Quit"]
+texture = ExtResource("7_ukoe1")
+
+[node name="hovered" type="Sprite2D" parent="Buttons/Quit"]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("10_ahcjc")
+
+[connection signal="mouse_entered" from="Buttons/Play" to="Buttons/Play" method="mouse_enter"]
+[connection signal="mouse_exited" from="Buttons/Play" to="Buttons/Play" method="mouse_exit"]
+[connection signal="mouse_entered" from="Buttons/Options" to="Buttons/Options" method="mouse_enter"]
+[connection signal="mouse_exited" from="Buttons/Options" to="Buttons/Options" method="mouse_exit"]
+[connection signal="mouse_entered" from="Buttons/Quit" to="Buttons/Quit" method="mouse_enter"]
+[connection signal="mouse_exited" from="Buttons/Quit" to="Buttons/Quit" method="mouse_exit"]

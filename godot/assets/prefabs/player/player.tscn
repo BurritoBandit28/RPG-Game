@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwcnmnhvfymht"]
+[gd_scene load_steps=5 format=3 uid="uid://cwcnmnhvfymht"]
 
 [ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/test/front.png" id="1_shouq"]
-[ext_resource type="Script" path="res://assets/scripts/player/raycast.gd" id="2_nck5m"]
+[ext_resource type="FontFile" uid="uid://ceggse342ekt5" path="res://assets/sprites/misc/Minecraft.ttf" id="2_3xt3o"]
+[ext_resource type="Texture2D" uid="uid://ccocss1silckh" path="res://assets/sprites/misc/textbox.png" id="2_w1hnk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivi"]
 size = Vector2(20, 23)
@@ -15,6 +16,27 @@ lock_rotation = true
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 
+[node name="TextBox" type="Sprite2D" parent="Camera2D"]
+visible = false
+z_index = 20
+position = Vector2(0, 54)
+texture = ExtResource("2_w1hnk")
+
+[node name="Text" type="RichTextLabel" parent="Camera2D/TextBox"]
+z_index = 21
+offset_left = -127.0
+offset_top = -18.0
+offset_right = 373.0
+offset_bottom = 54.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(0.34902, 0.372549, 0.431373, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_3xt3o")
+theme_override_font_sizes/normal_font_size = 0
+fit_content = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
 position = Vector2(0, 3.5)
@@ -25,6 +47,8 @@ texture = ExtResource("1_shouq")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 23)
-script = ExtResource("2_nck5m")
 
-[connection signal="raycast_signal" from="." to="RayCast2D" method="_on_player_raycast_signal"]
+[node name="InteractTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
