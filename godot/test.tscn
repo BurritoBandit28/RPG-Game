@@ -26,11 +26,12 @@ layer_0/tile_data = PackedInt32Array(-1, 0, 0, 0, 0, 0, 1, 0, 0, 65538, 0, 0, 13
 
 [node name="NPC" parent="." instance=ExtResource("2_nshn4")]
 character = "Joyful Elf"
-dialog = Array[Array]([["Hello, my name is {name} the {character}", "who are you?"], ["I've had enough of you"]])
+dialog = Array[Array]([["Hello, my name is {name} the {character}", "who are you?"], ["I've had enough of you", "go away"], ["Alright Sir {pname}", "so called {pname} the {padj}", "please for the dear love of god", "kys"], ["FUCK OFF"]])
 z_index = 1
 
 [node name="Player" parent="." instance=ExtResource("3_6polw")]
-adjective = "Queer"
+name = "Arfurrrrr"
+adjective = "Deer Eater"
 position = Vector2(26, 17)
 
 [node name="NPC2" parent="." instance=ExtResource("2_nshn4")]

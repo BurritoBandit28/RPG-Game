@@ -8,7 +8,6 @@ size = Vector2(20, 23)
 [node name="NPC" type="NPC"]
 name = "Jerry"
 character = "Joyfull Elf"
-position = Vector2(-22, 24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

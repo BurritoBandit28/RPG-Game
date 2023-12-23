@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://85w7afrak577"]
+[gd_scene load_steps=20 format=3 uid="uid://85w7afrak577"]
 
 [ext_resource type="Texture2D" uid="uid://bykfknutaejdl" path="res://assets/sprites/tile-sheet/grass.png" id="1_idpok"]
 [ext_resource type="Texture2D" uid="uid://dnqs8l06ynimd" path="res://assets/sprites/menu/play.png" id="2_nasq5"]
@@ -10,12 +10,32 @@
 [ext_resource type="Texture2D" uid="uid://c73pxoqgoxy5v" path="res://assets/sprites/menu/quit_grass.png" id="7_ukoe1"]
 [ext_resource type="Texture2D" uid="uid://bb2r68fu53fjy" path="res://assets/sprites/menu/options_hovered.png" id="7_xxc38"]
 [ext_resource type="Texture2D" uid="uid://djx845fy1kwlv" path="res://assets/sprites/menu/quit_hovered.png" id="10_ahcjc"]
+[ext_resource type="Texture2D" uid="uid://d4mruatgmrtag" path="res://assets/sprites/menu/source.png" id="11_pklli"]
+[ext_resource type="Texture2D" uid="uid://cn50gfwje5dnw" path="res://assets/sprites/menu/source_grass.png" id="12_vmvy2"]
+[ext_resource type="Texture2D" uid="uid://dmv5qt33ivqxx" path="res://assets/sprites/menu/source_hovered.png" id="13_6vym2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbrpb"]
 texture = ExtResource("1_idpok")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:1/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+4:1/0 = 0
+4:0/0 = 0
+3:0/0 = 0
+2:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+0:2/0 = 0
+3:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_embtc"]
 tile_size = Vector2i(32, 32)
@@ -30,75 +50,125 @@ size = Vector2(73, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3trrv"]
 size = Vector2(37, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyidh"]
+size = Vector2(64, 20)
+
 [node name="Menu" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_embtc")
 format = 2
-layer_0/tile_data = PackedInt32Array(-65538, 0, 0, -2, 0, 0, 65534, 0, 0, 131070, 0, 0, 196606, 0, 0, 262142, 0, 0, 327678, 0, 0, -65537, 0, 0, -1, 0, 0, 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, 262143, 0, 0, 327679, 0, 0, -131072, 0, 0, -65536, 0, 0, 0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, -131071, 0, 0, -65535, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 196609, 0, 0, 262145, 0, 0, -131070, 0, 0, -65534, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, -131069, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 0, 0, -131068, 0, 0, -65532, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262148, 0, 0, -327686, 0, 0, -262150, 0, 0, -196614, 0, 0, -131078, 0, 0, -65542, 0, 0, -6, 0, 0, 65530, 0, 0, 131066, 0, 0, 196602, 0, 0, 262138, 0, 0, 327674, 0, 0, 393210, 0, 0, 458746, 0, 0, -327685, 0, 0, -262149, 0, 0, -196613, 0, 0, -131077, 0, 0, -65541, 0, 0, -5, 0, 0, 65531, 0, 0, 131067, 0, 0, 196603, 0, 0, 262139, 0, 0, 327675, 0, 0, 393211, 0, 0, 458747, 0, 0, -327684, 0, 0, -262148, 0, 0, -196612, 0, 0, -131076, 0, 0, -65540, 0, 0, -4, 0, 0, 65532, 0, 0, 131068, 0, 0, 196604, 0, 0, 262140, 0, 0, 327676, 0, 0, 393212, 0, 0, 458748, 0, 0, -327683, 0, 0, -262147, 0, 0, -196611, 0, 0, -131075, 0, 0, -65539, 0, 0, -3, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, 262141, 0, 0, 327677, 0, 0, 393213, 0, 0, 458749, 0, 0, -327682, 0, 0, -262146, 0, 0, -196610, 0, 0, -131074, 0, 0, 393214, 0, 0, 458750, 0, 0, -327681, 0, 0, -262145, 0, 0, -196609, 0, 0, -131073, 0, 0, 393215, 0, 0, 458751, 0, 0, -393216, 0, 0, -327680, 0, 0, -262144, 0, 0, -196608, 0, 0, 327680, 0, 0, 393216, 0, 0, -393215, 0, 0, -327679, 0, 0, -262143, 0, 0, -196607, 0, 0, 327681, 0, 0, 393217, 0, 0, -393214, 0, 0, -327678, 0, 0, -262142, 0, 0, -196606, 0, 0, 327682, 0, 0, 393218, 0, 0, -393213, 0, 0, -327677, 0, 0, -262141, 0, 0, -196605, 0, 0, 327683, 0, 0, 393219, 0, 0, -393212, 0, 0, -327676, 0, 0, -262140, 0, 0, -196604, 0, 0, 327684, 0, 0, 393220, 0, 0, -393211, 0, 0, -327675, 0, 0, -262139, 0, 0, -196603, 0, 0, -131067, 0, 0, -65531, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, -393210, 0, 0, -327674, 0, 0, -262138, 0, 0, -196602, 0, 0, -131066, 0, 0, -65530, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, -393209, 0, 0, -327673, 0, 0, -262137, 0, 0, -196601, 0, 0, -131065, 0, 0, -65529, 0, 0, 7, 0, 0, 65543, 0, 0, 131079, 0, 0, 196615, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0)
+layer_0/tile_data = PackedInt32Array(-65538, 262144, 0, -2, 262144, 1, 65534, 262144, 1, 131070, 262144, 1, -65537, 0, 1, -1, 0, 0, 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, -131072, 0, 0, -65536, 0, 0, 0, 0, 0, 65536, 0, 0, 131072, 0, 0, -131071, 65536, 2, -65535, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, -131070, 0, 1, -65534, 0, 0, 2, 0, 0, 65538, 65536, 2, 131074, 0, 0, -131069, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, -131076, 0, 0, -65540, 196608, 0, -4, 196608, 2, 65532, 0, 1, 131068, 65536, 2, 196604, 0, 0, -131075, 0, 0, -65539, 196608, 0, -3, 393216, 0, 65533, 131072, 1, 131069, 131072, 1, 196605, 131072, 1, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, 196606, 262144, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(5, 5)
 
-[node name="Buttons" type="Node" parent="."]
+[node name="ButtonContainer" type="ButtonContainer" parent="."]
+buttons = Array[Array]([[NodePath("Play"), NodePath("Options"), NodePath("Quit")], [NodePath("Source"), NodePath("Options2")]])
 
-[node name="Play" type="UIButton" parent="Buttons"]
+[node name="Play" type="UIButton" parent="ButtonContainer"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Play"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Play"]
 shape = SubResource("RectangleShape2D_qb7cw")
 
-[node name="button" type="Sprite2D" parent="Buttons/Play"]
+[node name="button" type="Sprite2D" parent="ButtonContainer/Play"]
 texture = ExtResource("2_nasq5")
 
-[node name="grass" type="Sprite2D" parent="Buttons/Play"]
+[node name="grass" type="Sprite2D" parent="ButtonContainer/Play"]
 texture = ExtResource("3_8452y")
 
-[node name="hovered" type="Sprite2D" parent="Buttons/Play"]
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Play"]
 visible = false
 position = Vector2(0, -1)
 texture = ExtResource("4_lg1v0")
 
-[node name="Options" type="UIButton" parent="Buttons"]
+[node name="Options" type="UIButton" parent="ButtonContainer"]
 button_types = "options"
 position = Vector2(0, 25)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Options"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Options"]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_chg0h")
 
-[node name="button" type="Sprite2D" parent="Buttons/Options"]
+[node name="button" type="Sprite2D" parent="ButtonContainer/Options"]
 texture = ExtResource("4_788gu")
 
-[node name="grass" type="Sprite2D" parent="Buttons/Options"]
+[node name="grass" type="Sprite2D" parent="ButtonContainer/Options"]
 texture = ExtResource("5_wh3k5")
 
-[node name="hovered" type="Sprite2D" parent="Buttons/Options"]
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Options"]
 visible = false
 position = Vector2(0, -1)
 texture = ExtResource("7_xxc38")
 
-[node name="Quit" type="UIButton" parent="Buttons"]
+[node name="Quit" type="UIButton" parent="ButtonContainer"]
 button_types = "quit"
 position = Vector2(0, 50)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Quit"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Quit"]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3trrv")
 
-[node name="button" type="Sprite2D" parent="Buttons/Quit"]
+[node name="button" type="Sprite2D" parent="ButtonContainer/Quit"]
 texture = ExtResource("6_wiwnd")
 
-[node name="grass" type="Sprite2D" parent="Buttons/Quit"]
+[node name="grass" type="Sprite2D" parent="ButtonContainer/Quit"]
 texture = ExtResource("7_ukoe1")
 
-[node name="hovered" type="Sprite2D" parent="Buttons/Quit"]
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Quit"]
 visible = false
 position = Vector2(0, -1)
 texture = ExtResource("10_ahcjc")
 
-[connection signal="mouse_entered" from="Buttons/Play" to="Buttons/Play" method="mouse_enter"]
-[connection signal="mouse_exited" from="Buttons/Play" to="Buttons/Play" method="mouse_exit"]
-[connection signal="mouse_entered" from="Buttons/Options" to="Buttons/Options" method="mouse_enter"]
-[connection signal="mouse_exited" from="Buttons/Options" to="Buttons/Options" method="mouse_exit"]
-[connection signal="mouse_entered" from="Buttons/Quit" to="Buttons/Quit" method="mouse_enter"]
-[connection signal="mouse_exited" from="Buttons/Quit" to="Buttons/Quit" method="mouse_exit"]
+[node name="Source" type="UIButton" parent="ButtonContainer"]
+button_types = "source"
+position = Vector2(78, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Source"]
+shape = SubResource("RectangleShape2D_jyidh")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/Source"]
+texture = ExtResource("11_pklli")
+
+[node name="grass" type="Sprite2D" parent="ButtonContainer/Source"]
+texture = ExtResource("12_vmvy2")
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Source"]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("13_6vym2")
+
+[node name="Options2" type="UIButton" parent="ButtonContainer"]
+button_types = "options"
+position = Vector2(78, 25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Options2"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_chg0h")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/Options2"]
+texture = ExtResource("4_788gu")
+
+[node name="grass" type="Sprite2D" parent="ButtonContainer/Options2"]
+texture = ExtResource("5_wh3k5")
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Options2"]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("7_xxc38")
+
+[node name="InteractTimer" type="Timer" parent="ButtonContainer"]
+process_callback = 0
+wait_time = 0.125
+one_shot = true
+
+[connection signal="mouse_entered" from="ButtonContainer/Play" to="ButtonContainer/Play" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Play" to="ButtonContainer/Play" method="mouse_exit"]
+[connection signal="mouse_entered" from="ButtonContainer/Options" to="ButtonContainer/Options" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Options" to="ButtonContainer/Options" method="mouse_exit"]
+[connection signal="mouse_entered" from="ButtonContainer/Quit" to="ButtonContainer/Quit" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Quit" to="ButtonContainer/Quit" method="mouse_exit"]
+[connection signal="mouse_entered" from="ButtonContainer/Source" to="ButtonContainer/Source" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Source" to="ButtonContainer/Source" method="mouse_exit"]
+[connection signal="mouse_entered" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_exit"]
