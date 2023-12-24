@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 use std::thread::current;
-use godot::engine::{IStaticBody2D, StaticBody2D};
+use godot::engine::{IStaticBody2D, StaticBody2D, Node};
 use godot::engine::utilities::str;
 use godot::prelude::*;
 use crate::interactable::Interactable;
@@ -48,6 +48,7 @@ impl NPC  {
     pub fn interact(&mut self, player: &mut Player) {
 
         player.get_text().clear();
+        player.get_name_tag_text().clear();
 
         if self.current_dialog >= self.dialog.len() {
             self.current_dialog-=1;
@@ -61,10 +62,12 @@ impl NPC  {
         else {
             player.set_current_dialog_over(false);
             player.get_text_box().set_visible(true);
+            player.get_name_tag().set_visible(true);
         }
 
 
         godot_print!("{}", self.dialog.get(self.current_dialog).get(self.current_line));
+        player.get_name_tag_text().add_text(GString::from(format!("{} the {}", self.name, self.character)));
         player.get_text().add_text(self.insert_variables(GString::from(self.dialog.get(self.current_dialog).get(self.current_line).stringify()), player));
         self.current_line +=1;
 

@@ -81,8 +81,42 @@ impl IRigidBody2D for Player {
 
     }
 }
+
+
 #[godot_api]
 impl Player {
+
+
+    #[func]
+    pub fn body_entered(&mut self, mut node : Gd<Node2D>) {
+
+        if node.get_class() == GString::from("Player") {
+            return;
+        }
+
+        if node.global_transform().origin.y < self.rb.global_transform().origin.y {
+            if node.z_index() > self.rb.z_index() {
+                let z = node.z_index();
+                node.set_z_index(self.rb.z_index());
+                self.rb.set_z_index(z);
+            }
+            if node.z_index() == self.rb.z_index() {
+                let x= self.rb.z_index()+1;
+                self.rb.set_z_index(x);
+            }
+        }
+        else if node.global_transform().origin.y > self.rb.global_transform().origin.y{
+            if node.z_index() < self.rb.z_index() {
+                let z = self.rb.z_index();
+                self.rb.set_z_index(node.z_index());
+                node.set_z_index(z);
+            }
+            if node.z_index() == self.rb.z_index() {
+                let x= node.z_index()+1;
+                node.set_z_index(x);
+            }
+        }
+    }
 
     pub fn get_interact_timer(&mut self) -> Gd<Timer> {
         return self.rb.get_node_as::<Timer>("InteractTimer");
@@ -95,9 +129,18 @@ impl Player {
         return self.rb.get_node_as::<Sprite2D>("Camera2D/TextBox");
     }
 
+    pub fn get_name_tag(&mut self) -> Gd<Sprite2D> {
+        return self.rb.get_node_as::<Sprite2D>("Camera2D/NameTag");
+    }
+
+    pub fn get_name_tag_text(&mut self) ->Gd<RichTextLabel> {
+        return self.rb.get_node_as::<RichTextLabel>("Camera2D/NameTag/Text");
+    }
+
     pub fn set_current_dialog_over(&mut self, tf : bool) {
         self.current_dialog_over =tf;
         self.get_text_box().set_visible(!tf);
+        self.get_name_tag().set_visible(!tf);
     }
 
 

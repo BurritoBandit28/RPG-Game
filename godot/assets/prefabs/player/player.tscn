@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwcnmnhvfymht"]
+[gd_scene load_steps=7 format=3 uid="uid://cwcnmnhvfymht"]
 
 [ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/test/front.png" id="1_shouq"]
 [ext_resource type="FontFile" uid="uid://ceggse342ekt5" path="res://assets/sprites/misc/Minecraft.ttf" id="2_3xt3o"]
 [ext_resource type="Texture2D" uid="uid://ccocss1silckh" path="res://assets/sprites/misc/textbox.png" id="2_w1hnk"]
+[ext_resource type="Texture2D" uid="uid://bg44sug3n6tth" path="res://assets/sprites/misc/nametag.png" id="3_jneeq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivi"]
 size = Vector2(20, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpy8w"]
+size = Vector2(26, 35)
 
 [node name="Player" type="Player"]
 position = Vector2(1, 0)
@@ -37,6 +41,27 @@ theme_override_fonts/normal_font = ExtResource("2_3xt3o")
 theme_override_font_sizes/normal_font_size = 0
 fit_content = true
 
+[node name="NameTag" type="Sprite2D" parent="Camera2D"]
+visible = false
+z_index = 21
+position = Vector2(-72, 26)
+texture = ExtResource("3_jneeq")
+
+[node name="Text" type="RichTextLabel" parent="Camera2D/NameTag"]
+z_index = 21
+offset_left = -70.0
+offset_top = -8.0
+offset_right = 208.0
+offset_bottom = 24.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(0.341176, 0.117647, 0.0627451, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_3xt3o")
+theme_override_font_sizes/normal_font_size = 0
+fit_content = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
 position = Vector2(0, 3.5)
@@ -53,3 +78,13 @@ process_callback = 0
 wait_time = 0.125
 one_shot = true
 autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Area" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_hpy8w")
+debug_color = Color(0.690196, 0.305882, 0.972549, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="body_entered"]

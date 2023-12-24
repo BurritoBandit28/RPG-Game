@@ -56,11 +56,13 @@ impl IArea2D for UIButton {
 impl UIButton {
 
     pub fn do_button_action(&mut self, ButtonType : ButtonType) {
+
+        // now where have I seen this before..?
         match ButtonType {
             ButtonType::PLAY => {
                 //todo
                 godot_print!("play");
-                let game =  load::<PackedScene>("res://test.tscn");
+                let game =  load::<PackedScene>("res://assets/scenes/LevelOne.tscn");
                 self.sprite.tree().unwrap().change_scene_to_packed(game);
             }
             ButtonType::QUIT => {
