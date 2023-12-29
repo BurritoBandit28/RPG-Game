@@ -5,8 +5,9 @@ use godot::prelude::*;
 use std::fmt::Display;
 
 use std::str::FromStr;
+use crate::floor_item::FloorItem;
 use crate::interactable::Interactable;
-use crate::LimboPlayerStats::LimboPlayerStats;
+use crate::limbo_player_stats::LimboPlayerStats;
 use crate::npc::NPC;
 
 #[derive(GodotClass)]
@@ -45,7 +46,7 @@ impl IRigidBody2D for Player {
         }
     }
 
-    fn physics_process(&mut self, delta: f64) {
+    fn physics_process(&mut self, _ : f64) {
         let input = Input::singleton();
         let mut vel = Vector2::new(0.0, 0.0);
         let val: f32 = {
@@ -85,7 +86,8 @@ impl IRigidBody2D for Player {
     }
 
     fn ready(&mut self) {
-        let mut limbo = self.get_limbo_stats();
+        let mut binding = self.get_limbo_stats();
+        let mut limbo = binding.bind_mut();
         self.name = limbo.get_name();
         self.adjective = limbo.get_adjective();
         self.health = limbo.get_health();
@@ -96,13 +98,13 @@ impl IRigidBody2D for Player {
 #[godot_api]
 impl Player {
 
-    fn get_limbo_stats(&mut self) -> GdMut<LimboPlayerStats> {
-        let mut bind = self.rb.get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats");
-        bind.bind_mut()
+    fn get_limbo_stats(&mut self) -> Gd<LimboPlayerStats> {
+        return self.rb.get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats")
     }
     #[func]
     pub fn save_stats(&mut self) {
-        let mut limbo = self.get_limbo_stats();
+        let mut binding = self.get_limbo_stats();
+        let mut limbo = binding.bind_mut();
         limbo.set_health(self.health);
     }
 
@@ -182,7 +184,18 @@ impl Player {
 
             // not the sleekest implementation... but it works and thats the important part
             match hit.get_class().to_string().as_str() {
-                "NPC" => { hit.clone().try_cast::<NPC>().unwrap().bind_mut().interact(self); }
+                "NPC" => {
+                    hit.clone()
+                        .try_cast::<NPC>()
+                        .unwrap().bind_mut()
+                        .interact(self); }
+
+                "FloorItem" => {
+                    hit.clone()
+                        .try_cast::<FloorItem>()
+                        .unwrap().bind_mut()
+                        .interact(self); }
+
                 _ => { godot_print!("uhm") }
 
             }

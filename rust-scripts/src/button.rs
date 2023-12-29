@@ -17,8 +17,6 @@ use open::that;
 #[derive(GodotClass)]
 #[class(base=Area2D)]
 pub struct UIButton {
-    #[export]
-    button_types : GString,
     #[base]
     sprite : Base<Area2D>,
     hovered : bool
@@ -31,7 +29,6 @@ impl IArea2D for UIButton {
     fn init(base: Base<Area2D>) -> Self {
         Self {
             sprite : base,
-            button_types : GString::from("play"),
             hovered : false
         }
     }
@@ -40,7 +37,6 @@ impl IArea2D for UIButton {
 
     fn process(&mut self, _ : f64) {
         let input = Input::singleton();
-        //let btype = self.get_type();
         if self.get_hovered() && input.is_action_pressed(StringName::from_str("click").unwrap()) && self.get_interact_timer().is_stopped() {
             self.do_button_action();
             self.get_interact_timer().start()
@@ -92,33 +88,5 @@ impl UIButton {
         self.get_hovered_sprite().set_visible(hovered);
     }
 
-    pub fn get_type(&mut self) -> ButtonType {
-        match self.button_types.to_string().to_lowercase().as_str() {
-            "options" => {ButtonType::OPTIONS},
-            "quit" => {ButtonType::QUIT},
-            "source" => {ButtonType::SOURCE}
-            _ => {ButtonType::PLAY}
-        }
-    }
 
 }
-
-pub enum ButtonType {
-    PLAY,
-    QUIT,
-    OPTIONS,
-    SOURCE
-}
-
-impl Display for ButtonType {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let str = match self {
-            ButtonType::OPTIONS => "Options".to_string(),
-            ButtonType::QUIT => "Quit".to_string(),
-            ButtonType::SOURCE => "Source".to_string(),
-            _ => "Play".to_string(),
-        };
-        write!(f, "{}", str)
-    }
-}
-

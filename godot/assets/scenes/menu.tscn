@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://85w7afrak577"]
+[gd_scene load_steps=24 format=3 uid="uid://85w7afrak577"]
 
 [ext_resource type="Texture2D" uid="uid://bykfknutaejdl" path="res://assets/sprites/tile-sheet/grass.png" id="1_idpok"]
 [ext_resource type="Texture2D" uid="uid://dnqs8l06ynimd" path="res://assets/sprites/menu/play.png" id="2_nasq5"]
@@ -13,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://d4mruatgmrtag" path="res://assets/sprites/menu/source.png" id="11_pklli"]
 [ext_resource type="Texture2D" uid="uid://cn50gfwje5dnw" path="res://assets/sprites/menu/source_grass.png" id="12_vmvy2"]
 [ext_resource type="Texture2D" uid="uid://dmv5qt33ivqxx" path="res://assets/sprites/menu/source_hovered.png" id="13_6vym2"]
+[ext_resource type="Texture2D" uid="uid://7hdcpfxihevr" path="res://assets/sprites/menu/credits.png" id="14_d0ibp"]
+[ext_resource type="Texture2D" uid="uid://dherpib6vs7yc" path="res://assets/sprites/menu/credits_grass.png" id="15_ft3cc"]
+[ext_resource type="Texture2D" uid="uid://2pa831iqtw1h" path="res://assets/sprites/menu/credits_hovered.png" id="16_63sfa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbrpb"]
 texture = ExtResource("1_idpok")
@@ -53,6 +56,9 @@ size = Vector2(37, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyidh"]
 size = Vector2(64, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtakw"]
+size = Vector2(70, 20)
+
 [node name="Menu" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -64,7 +70,7 @@ layer_0/tile_data = PackedInt32Array(-65538, 262144, 0, -2, 262144, 1, 65534, 26
 zoom = Vector2(5, 5)
 
 [node name="ButtonContainer" type="ButtonContainer" parent="."]
-buttons = Array[Array]([[NodePath("Play"), NodePath("Options"), NodePath("Quit")], [NodePath("Source"), NodePath("Options2")]])
+buttons = Array[Array]([[NodePath("Play"), NodePath("Options"), NodePath("Quit")], [NodePath("Source"), NodePath("Credits")]])
 
 [node name="Play" type="UIButton" parent="ButtonContainer"]
 
@@ -138,24 +144,24 @@ visible = false
 position = Vector2(0, -1)
 texture = ExtResource("13_6vym2")
 
-[node name="Options2" type="UIButton" parent="ButtonContainer"]
+[node name="Credits" type="UIButton" parent="ButtonContainer"]
 button_types = "options"
 position = Vector2(78, 25)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Options2"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_chg0h")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Credits"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_vtakw")
 
-[node name="button" type="Sprite2D" parent="ButtonContainer/Options2"]
-texture = ExtResource("4_788gu")
+[node name="button" type="Sprite2D" parent="ButtonContainer/Credits"]
+texture = ExtResource("14_d0ibp")
 
-[node name="grass" type="Sprite2D" parent="ButtonContainer/Options2"]
-texture = ExtResource("5_wh3k5")
+[node name="grass" type="Sprite2D" parent="ButtonContainer/Credits"]
+texture = ExtResource("15_ft3cc")
 
-[node name="hovered" type="Sprite2D" parent="ButtonContainer/Options2"]
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Credits"]
 visible = false
 position = Vector2(0, -1)
-texture = ExtResource("7_xxc38")
+texture = ExtResource("16_63sfa")
 
 [node name="InteractTimer" type="Timer" parent="ButtonContainer"]
 process_callback = 0
@@ -176,6 +182,6 @@ one_shot = true
 [connection signal="button_pressed" from="ButtonContainer/Source" to="ButtonResult" method="source"]
 [connection signal="mouse_entered" from="ButtonContainer/Source" to="ButtonContainer/Source" method="mouse_enter"]
 [connection signal="mouse_exited" from="ButtonContainer/Source" to="ButtonContainer/Source" method="mouse_exit"]
-[connection signal="button_pressed" from="ButtonContainer/Options2" to="ButtonResult" method="options"]
-[connection signal="mouse_entered" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_enter"]
-[connection signal="mouse_exited" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/Credits" to="ButtonResult" method="options"]
+[connection signal="mouse_entered" from="ButtonContainer/Credits" to="ButtonContainer/Credits" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Credits" to="ButtonContainer/Credits" method="mouse_exit"]

@@ -3,8 +3,9 @@ mod player;
 mod interactable;
 mod button;
 mod button_container;
-mod LimboPlayerStats;
-mod ButtonResult;
+mod limbo_player_stats;
+mod button_result;
+mod floor_item;
 
 use godot::prelude::*;
 

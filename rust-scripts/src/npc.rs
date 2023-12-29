@@ -8,7 +8,6 @@ use crate::player::Player;
 
 
 #[derive(GodotClass)]
-// TODO - have npc + future interactable elements extend a common custom class, and not StaticBody2D
 #[class(base=StaticBody2D)]
 pub struct NPC {
     #[export]

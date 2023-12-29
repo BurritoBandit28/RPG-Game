@@ -34,7 +34,7 @@ impl INode for ButtonContainer {
     }
 
     // what happens each frame
-    fn process(&mut self, delta: f64) {
+    fn process(&mut self, _ : f64) {
         if self.get_interact_timer().is_stopped() {
             let input = Input::singleton();
 
