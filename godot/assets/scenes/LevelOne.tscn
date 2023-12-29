@@ -42,8 +42,11 @@ layer_0/tile_data = PackedInt32Array(-196613, 0, 1, -131077, 0, 1, -65541, 0, 0,
 position = Vector2(-17, -41)
 
 [node name="NPC" parent="." instance=ExtResource("3_wgxrx")]
-dialog = Array[Array]([["Sup loser"]])
+dialog = Array[Array]([["{pname} the {padj}"]])
 position = Vector2(231, -12)
 
 [node name="NPC2" parent="." instance=ExtResource("3_wgxrx")]
+name = "Shit Head"
+character = "Wanker"
+dialog = Array[Array]([["hey", "idot hehehe"]])
 position = Vector2(233, -59)

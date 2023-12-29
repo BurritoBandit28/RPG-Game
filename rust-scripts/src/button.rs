@@ -38,11 +38,11 @@ impl IArea2D for UIButton {
 
 
 
-    fn process(&mut self, delta: f64) {
+    fn process(&mut self, _ : f64) {
         let input = Input::singleton();
-        let btype = self.get_type();
+        //let btype = self.get_type();
         if self.get_hovered() && input.is_action_pressed(StringName::from_str("click").unwrap()) && self.get_interact_timer().is_stopped() {
-            self.do_button_action(btype);
+            self.do_button_action();
             self.get_interact_timer().start()
         }
     }
@@ -55,32 +55,13 @@ impl IArea2D for UIButton {
 #[godot_api]
 impl UIButton {
 
-    pub fn do_button_action(&mut self, ButtonType : ButtonType) {
-
-        // now where have I seen this before..?
-        match ButtonType {
-            ButtonType::PLAY => {
-                //todo
-                godot_print!("play");
-                let game =  load::<PackedScene>("res://assets/scenes/LevelOne.tscn");
-                self.sprite.tree().unwrap().change_scene_to_packed(game);
-            }
-            ButtonType::QUIT => {
-                //todo
-                godot_print!("quit")
-            }
-            ButtonType::OPTIONS => {
-                //todo
-                godot_print!("options")
-            }
-            ButtonType::SOURCE => {
-
-                // writing ``let _ = ...`` is the convention for when ignoring return values in Rust
-                let _ = that("https://github.com/BurritoBandit28/RPG-Game/tree/master/rust-scripts");
-                // no idea if that will work on the web build or not guess we'll find out
-            }
-        }
+    #[func]
+    pub fn do_button_action(&mut self) {
+        self.sprite.emit_signal("button_pressed".into(), &[]);
     }
+
+    #[signal]
+    fn button_pressed(&mut self);
 
     #[func]
     fn mouse_enter(&mut self) {

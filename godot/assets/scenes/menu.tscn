@@ -162,13 +162,20 @@ process_callback = 0
 wait_time = 0.125
 one_shot = true
 
+[node name="ButtonResult" type="ButtonResult" parent="."]
+
+[connection signal="button_pressed" from="ButtonContainer/Play" to="ButtonResult" method="play"]
 [connection signal="mouse_entered" from="ButtonContainer/Play" to="ButtonContainer/Play" method="mouse_enter"]
 [connection signal="mouse_exited" from="ButtonContainer/Play" to="ButtonContainer/Play" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/Options" to="ButtonResult" method="options"]
 [connection signal="mouse_entered" from="ButtonContainer/Options" to="ButtonContainer/Options" method="mouse_enter"]
 [connection signal="mouse_exited" from="ButtonContainer/Options" to="ButtonContainer/Options" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/Quit" to="ButtonResult" method="quit"]
 [connection signal="mouse_entered" from="ButtonContainer/Quit" to="ButtonContainer/Quit" method="mouse_enter"]
 [connection signal="mouse_exited" from="ButtonContainer/Quit" to="ButtonContainer/Quit" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/Source" to="ButtonResult" method="source"]
 [connection signal="mouse_entered" from="ButtonContainer/Source" to="ButtonContainer/Source" method="mouse_enter"]
 [connection signal="mouse_exited" from="ButtonContainer/Source" to="ButtonContainer/Source" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/Options2" to="ButtonResult" method="options"]
 [connection signal="mouse_entered" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_enter"]
 [connection signal="mouse_exited" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_exit"]

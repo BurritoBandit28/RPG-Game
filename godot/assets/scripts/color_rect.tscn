@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd66bngp3mnyp"]
+
+[ext_resource type="Theme" uid="uid://cf2wlmstr40f8" path="res://assets/text_input_theme.tres" id="1_mybot"]
+
+[node name="ColorRect" type="ColorRect"]
+offset_left = -611.0
+offset_top = -339.0
+offset_right = 607.0
+offset_bottom = 342.0
+mouse_filter = 2
+color = Color(0.176471, 0.223529, 0.290196, 1)
+
+[node name="LineEdit" type="LineEdit" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 274.0
+offset_top = 339.0
+offset_right = 948.0
+offset_bottom = 462.0
+theme = ExtResource("1_mybot")
+placeholder_text = "Adjective"
+caret_blink = true
+
+[node name="LineEdit2" type="LineEdit" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 274.0
+offset_top = 168.0
+offset_right = 948.0
+offset_bottom = 291.0
+theme = ExtResource("1_mybot")
+placeholder_text = "Name"
+caret_blink = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 84.0
+offset_right = 1274.0
+offset_bottom = 196.0
+scale = Vector2(0.758262, 0.784341)
+theme = ExtResource("1_mybot")
+text = "Choose your players name and adjective!"
+fit_content = true

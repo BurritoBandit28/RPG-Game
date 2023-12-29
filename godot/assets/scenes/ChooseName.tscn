@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqifgmoifmhn5"]
+
+[ext_resource type="Theme" uid="uid://cf2wlmstr40f8" path="res://assets/text_input_theme.tres" id="1_1n5ja"]
+[ext_resource type="Script" path="res://assets/scripts/player/ChooseName.gd" id="1_kc7vb"]
+[ext_resource type="Texture2D" uid="uid://dnqs8l06ynimd" path="res://assets/sprites/menu/play.png" id="3_o1fh8"]
+[ext_resource type="Texture2D" uid="uid://bq8lgnqmi52r8" path="res://assets/sprites/menu/play_hovered.png" id="4_h2los"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qb7cw"]
+size = Vector2(48, 20)
+
+[node name="ChooseName" type="Node2D"]
+script = ExtResource("1_kc7vb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ButtonContainer" type="ButtonContainer" parent="."]
+buttons = Array[Array]([[NodePath("Play")]])
+
+[node name="Play" type="UIButton" parent="ButtonContainer"]
+position = Vector2(0, 234)
+scale = Vector2(6.8, 6.8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Play"]
+shape = SubResource("RectangleShape2D_qb7cw")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/Play"]
+texture = ExtResource("3_o1fh8")
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/Play"]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("4_h2los")
+
+[node name="InteractTimer" type="Timer" parent="ButtonContainer"]
+process_callback = 0
+wait_time = 0.125
+one_shot = true
+
+[node name="ButtonResult" type="ButtonResult" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -611.0
+offset_top = -339.0
+offset_right = 607.0
+offset_bottom = 342.0
+mouse_filter = 2
+color = Color(0.176471, 0.223529, 0.290196, 1)
+
+[node name="Name" type="LineEdit" parent="ColorRect"]
+z_index = 1
+layout_mode = 0
+offset_left = 274.0
+offset_top = 168.0
+offset_right = 948.0
+offset_bottom = 291.0
+theme = ExtResource("1_1n5ja")
+placeholder_text = "Name"
+caret_blink = true
+
+[node name="Adjective" type="LineEdit" parent="ColorRect"]
+z_index = 1
+layout_mode = 0
+offset_left = 274.0
+offset_top = 339.0
+offset_right = 948.0
+offset_bottom = 462.0
+theme = ExtResource("1_1n5ja")
+placeholder_text = "Adjective"
+caret_blink = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 84.0
+offset_right = 1274.0
+offset_bottom = 196.0
+scale = Vector2(0.758262, 0.784341)
+theme = ExtResource("1_1n5ja")
+text = "Choose your players name and adjective!"
+fit_content = true
+
+[connection signal="button_pressed" from="ButtonContainer/Play" to="ButtonResult" method="load_scene_one"]
+[connection signal="mouse_entered" from="ButtonContainer/Play" to="ButtonContainer/Play" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/Play" to="ButtonContainer/Play" method="mouse_exit"]
+[connection signal="text_submitted" from="ColorRect/Name" to="." method="set_pname"]
+[connection signal="text_submitted" from="ColorRect/Adjective" to="." method="set_padjective"]

@@ -87,4 +87,6 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_hpy8w")
 debug_color = Color(0.690196, 0.305882, 0.972549, 0.419608)
 
+[node name="LimboPlayerStats" type="LimboPlayerStats" parent="."]
+
 [connection signal="body_entered" from="Area2D" to="." method="body_entered"]

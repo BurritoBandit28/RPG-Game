@@ -1,11 +1,12 @@
 
 use godot::builtin::meta::GodotConvert;
-use godot::engine::{IRigidBody2D, ISprite2D, IStaticBody2D, RayCast2D, RichTextLabel, RigidBody2D, Sprite2D, Timer};
+use godot::engine::{Engine, IRigidBody2D, ISprite2D, IStaticBody2D, RayCast2D, RichTextLabel, RigidBody2D, Sprite2D, Timer};
 use godot::prelude::*;
 use std::fmt::Display;
 
 use std::str::FromStr;
 use crate::interactable::Interactable;
+use crate::LimboPlayerStats::LimboPlayerStats;
 use crate::npc::NPC;
 
 #[derive(GodotClass)]
@@ -22,7 +23,9 @@ pub struct Player {
     name : GString,
     #[export]
     adjective : GString,
-    current_dialog_over: bool
+    current_dialog_over: bool,
+    #[export]
+    health : u32
 }
 
 #[godot_api]
@@ -36,7 +39,8 @@ impl IRigidBody2D for Player {
             facing: Facing::RIGHT,
             name : GString::from("Jilly Tismond"),
             adjective : GString::from("Brave"),
-            current_dialog_over : true
+            current_dialog_over : true,
+            health : 100
 
         }
     }
@@ -78,13 +82,29 @@ impl IRigidBody2D for Player {
             self.raycast();
             //godot_print!("{}", self.get_player_name())
         }
+    }
 
+    fn ready(&mut self) {
+        let mut limbo = self.get_limbo_stats();
+        self.name = limbo.get_name();
+        self.adjective = limbo.get_adjective();
+        self.health = limbo.get_health();
     }
 }
 
 
 #[godot_api]
 impl Player {
+
+    fn get_limbo_stats(&mut self) -> GdMut<LimboPlayerStats> {
+        let mut bind = self.rb.get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats");
+        bind.bind_mut()
+    }
+    #[func]
+    pub fn save_stats(&mut self) {
+        let mut limbo = self.get_limbo_stats();
+        limbo.set_health(self.health);
+    }
 
 
     #[func]
