@@ -72,6 +72,11 @@ zoom = Vector2(5, 5)
 [node name="ButtonContainer" type="ButtonContainer" parent="."]
 buttons = Array[Array]([[NodePath("Play"), NodePath("Options"), NodePath("Quit")], [NodePath("Source"), NodePath("Credits")]])
 
+[node name="InteractTimer" type="Timer" parent="ButtonContainer"]
+process_callback = 0
+wait_time = 0.125
+one_shot = true
+
 [node name="Play" type="UIButton" parent="ButtonContainer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Play"]
@@ -89,7 +94,6 @@ position = Vector2(0, -1)
 texture = ExtResource("4_lg1v0")
 
 [node name="Options" type="UIButton" parent="ButtonContainer"]
-button_types = "options"
 position = Vector2(0, 25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Options"]
@@ -108,7 +112,6 @@ position = Vector2(0, -1)
 texture = ExtResource("7_xxc38")
 
 [node name="Quit" type="UIButton" parent="ButtonContainer"]
-button_types = "quit"
 position = Vector2(0, 50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Quit"]
@@ -127,7 +130,6 @@ position = Vector2(0, -1)
 texture = ExtResource("10_ahcjc")
 
 [node name="Source" type="UIButton" parent="ButtonContainer"]
-button_types = "source"
 position = Vector2(78, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Source"]
@@ -145,7 +147,6 @@ position = Vector2(0, -1)
 texture = ExtResource("13_6vym2")
 
 [node name="Credits" type="UIButton" parent="ButtonContainer"]
-button_types = "options"
 position = Vector2(78, 25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Credits"]
@@ -162,11 +163,6 @@ texture = ExtResource("15_ft3cc")
 visible = false
 position = Vector2(0, -1)
 texture = ExtResource("16_63sfa")
-
-[node name="InteractTimer" type="Timer" parent="ButtonContainer"]
-process_callback = 0
-wait_time = 0.125
-one_shot = true
 
 [node name="ButtonResult" type="ButtonResult" parent="."]
 

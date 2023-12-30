@@ -1,11 +1,11 @@
 
 use godot::builtin::meta::GodotConvert;
-use godot::engine::{Engine, IRigidBody2D, ISprite2D, IStaticBody2D, RayCast2D, RichTextLabel, RigidBody2D, Sprite2D, Timer};
+use godot::engine::{Area2D, Engine, IRigidBody2D, ISprite2D, IStaticBody2D, RayCast2D, RichTextLabel, RigidBody2D, Sprite2D, Timer};
 use godot::prelude::*;
 use std::fmt::Display;
 
 use std::str::FromStr;
-use crate::floor_item::FloorItem;
+use crate::floor_item::{FloorItem, Item};
 use crate::interactable::Interactable;
 use crate::limbo_player_stats::LimboPlayerStats;
 use crate::npc::NPC;
@@ -26,7 +26,9 @@ pub struct Player {
     adjective : GString,
     current_dialog_over: bool,
     #[export]
-    health : u32
+    health : u32,
+    inventory : Vec<u32>,
+    inventory_open : bool
 }
 
 #[godot_api]
@@ -41,7 +43,9 @@ impl IRigidBody2D for Player {
             name : GString::from("Jilly Tismond"),
             adjective : GString::from("Brave"),
             current_dialog_over : true,
-            health : 100
+            health : 100,
+            inventory : vec![0,0,0,0,0,0],
+            inventory_open : false
 
         }
     }
@@ -56,32 +60,50 @@ impl IRigidBody2D for Player {
                 self.speed
             }
         };
-
-        if self.current_dialog_over {
-            if Input::is_action_pressed(&input, StringName::from_str("a").unwrap()) {
-                vel.x -= val;
-                (*self).facing = Facing::LEFT;
+        if !self.inventory_open {
+            if self.current_dialog_over {
+                if Input::is_action_pressed(&input, StringName::from_str("a").unwrap()) {
+                    vel.x -= val;
+                    (*self).facing = Facing::LEFT;
+                }
+                if Input::is_action_pressed(&input, StringName::from_str("d").unwrap()) {
+                    vel.x += val;
+                    (*self).facing = Facing::RIGHT;
+                }
+                if Input::is_action_pressed(&input, StringName::from_str("s").unwrap()) {
+                    vel.y += val;
+                    (*self).facing = Facing::DOWN;
+                }
+                if Input::is_action_pressed(&input, StringName::from_str("w").unwrap()) {
+                    vel.y -= val;
+                    (*self).facing = Facing::UP;
+                }
+                vel.normalized();
+                self.rb.set_linear_velocity(vel);
+                let mut ray = &mut self.rb.get_node_as::<RayCast2D>("RayCast2D");
+                ray.set_rotation_degrees(self.facing.to_rot());
             }
-            if Input::is_action_pressed(&input, StringName::from_str("d").unwrap()) {
-                vel.x += val;
-                (*self).facing = Facing::RIGHT;
+            if Input::is_action_pressed(&input, StringName::from_str("interact").unwrap()) && self.get_interact_timer().is_stopped() {
+                self.raycast();
+                //godot_print!("{}", self.get_player_name())
             }
-            if Input::is_action_pressed(&input, StringName::from_str("s").unwrap()) {
-                vel.y += val;
-                (*self).facing = Facing::DOWN;
-            }
-            if Input::is_action_pressed(&input, StringName::from_str("w").unwrap()) {
-                vel.y -= val;
-                (*self).facing = Facing::UP;
-            }
-            vel.normalized();
-            self.rb.set_linear_velocity(vel);
-            let mut ray = &mut self.rb.get_node_as::<RayCast2D>("RayCast2D");
-            ray.set_rotation_degrees(self.facing.to_rot());
         }
-        if Input::is_action_pressed(&input, StringName::from_str("interact").unwrap()) && self.get_interact_timer().is_stopped() {
-            self.raycast();
-            //godot_print!("{}", self.get_player_name())
+        if Input::is_action_pressed(&input, StringName::from_str("inventory").unwrap() ) && self.get_interact_timer().is_stopped() {
+            self.get_interact_timer().start();
+            self.inventory_open = !self.inventory_open;
+
+            if self.inventory_open {
+
+                let inventory_screen = load::<PackedScene>("res://assets/prefabs/player/inventory_screen.tscn").instantiate();
+                self.get_camera().add_child(inventory_screen.unwrap());
+
+                for x in 0..self.inventory.len() {
+                    godot_print!("{} x{}", Item::empty().lookup(x).get_name(), self.inventory[x])
+                }
+            }
+            else {
+                self.get_inventory_screen().free();
+            }
         }
     }
 
@@ -98,6 +120,21 @@ impl IRigidBody2D for Player {
 #[godot_api]
 impl Player {
 
+
+
+    pub fn add_inventory(&mut self, index : usize, amount : u32) {
+        self.inventory[index]+=amount
+    }
+    pub fn take_inventory(&mut self, index : usize, amount : u32) -> Result<(), ()> {
+        if self.inventory[index] < amount {
+            Err(())
+        }
+        else {
+            self.inventory[index] -=amount;
+            Ok(())
+        }
+    }
+
     fn get_limbo_stats(&mut self) -> Gd<LimboPlayerStats> {
         return self.rb.get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats")
     }
@@ -108,6 +145,12 @@ impl Player {
         limbo.set_health(self.health);
     }
 
+    #[func]
+    pub fn area_entered(&mut self, mut area : Gd<Area2D>) {
+        if area.z_index() > self.rb.z_index() || area.z_index() == self.rb.z_index() {
+            self.rb.set_z_index(area.z_index()+1);
+        }
+    }
 
     #[func]
     pub fn body_entered(&mut self, mut node : Gd<Node2D>) {
@@ -115,7 +158,6 @@ impl Player {
         if node.get_class() == GString::from("Player") {
             return;
         }
-
         if node.global_transform().origin.y < self.rb.global_transform().origin.y {
             if node.z_index() > self.rb.z_index() {
                 let z = node.z_index();
@@ -144,6 +186,10 @@ impl Player {
         return self.rb.get_node_as::<Timer>("InteractTimer");
     }
 
+    pub fn get_camera(&mut self) -> Gd<Camera2D> {
+        return self.rb.get_node_as::<Camera2D>("Camera2D");
+    }
+
     pub fn get_text(&mut self) -> Gd<RichTextLabel> {
         return self.rb.get_node_as::<RichTextLabel>("Camera2D/TextBox/Text");
     }
@@ -158,11 +204,17 @@ impl Player {
     pub fn get_name_tag_text(&mut self) ->Gd<RichTextLabel> {
         return self.rb.get_node_as::<RichTextLabel>("Camera2D/NameTag/Text");
     }
+    pub fn get_inventory_screen(&mut self) ->Gd<Node2D> {
+        return self.rb.get_node_as::<Node2D>("Camera2D/InventoryScreen");
+    }
 
     pub fn set_current_dialog_over(&mut self, tf : bool) {
         self.current_dialog_over =tf;
         self.get_text_box().set_visible(!tf);
         self.get_name_tag().set_visible(!tf);
+    }
+    pub fn get_current_dialog_over(&mut self) -> bool {
+        self.current_dialog_over
     }
 
 
@@ -179,11 +231,10 @@ impl Player {
 
         if ray.is_colliding() {
 
-            let mut hit = &ray.collider().unwrap();
-
+            let mut hit = &ray.collider().unwrap().cast::<Node>().parent().unwrap();
 
             // not the sleekest implementation... but it works and thats the important part
-            match hit.get_class().to_string().as_str() {
+            match hit.clone().get_class().to_string().as_str() {
                 "NPC" => {
                     hit.clone()
                         .try_cast::<NPC>()

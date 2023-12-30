@@ -17,6 +17,7 @@ script = ExtResource("1_kc7vb")
 buttons = Array[Array]([[NodePath("Play")]])
 
 [node name="Play" type="UIButton" parent="ButtonContainer"]
+top_level = true
 position = Vector2(0, 234)
 scale = Vector2(6.8, 6.8)
 

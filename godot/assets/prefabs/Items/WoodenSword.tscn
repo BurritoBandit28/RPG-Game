@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://647cti6dmsfn"]
+
+[ext_resource type="Texture2D" uid="uid://boqxwtosqfsuv" path="res://assets/sprites/loot/wooden_sword.png" id="1_i03ht"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6f8f0"]
+size = Vector2(32, 32)
+
+[node name="WoodenSword" type="FloorItem"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i03ht")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6f8f0")

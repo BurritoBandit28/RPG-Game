@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use godot::bind::godot_api;
 use godot::builtin::{NodePath, StringName, VariantArray};
-use godot::engine::{INode, Input, Node, NodeExt, Timer};
+use godot::engine::{INode, INode2D, Input, Node, Node2D, NodeExt, Timer};
 use godot::log::godot_print;
 use godot::prelude::{Array, Base, Gd, GodotClass};
 use godot::private::You_forgot_the_attribute__godot_api;
@@ -9,10 +9,10 @@ use crate::button::UIButton;
 
 // the purpose of this class is to manage how a controller interacts with UI buttons.
 #[derive(GodotClass)]
-#[class(base=Node)]
+#[class(base=Node2D)]
 pub struct ButtonContainer{
     #[base]
-    base : Base<Node>,
+    base : Base<Node2D>,
     #[export]
     buttons : Array<VariantArray>,
     row : usize,
@@ -21,7 +21,7 @@ pub struct ButtonContainer{
 }
 
 #[godot_api]
-impl INode for ButtonContainer {
+impl INode2D for ButtonContainer {
 
     // init function defining defaults for this class
     fn init(base: Base<Self::Base>) -> Self {
