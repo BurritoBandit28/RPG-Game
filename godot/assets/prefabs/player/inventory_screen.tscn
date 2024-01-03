@@ -1,73 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://bic13kuxo88qn"]
+[gd_scene load_steps=13 format=3 uid="uid://bic13kuxo88qn"]
 
 [ext_resource type="Texture2D" uid="uid://bgo7ekk5lncf2" path="res://assets/sprites/loot/potion_1.png" id="1_efy3j"]
+[ext_resource type="Script" path="res://assets/prefabs/player/Sword.gd" id="1_vnl3p"]
 [ext_resource type="FontFile" uid="uid://ceggse342ekt5" path="res://assets/sprites/misc/Minecraft.ttf" id="2_hx6tj"]
 [ext_resource type="Texture2D" uid="uid://boqxwtosqfsuv" path="res://assets/sprites/loot/wooden_sword.png" id="3_5a5mm"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vqcw6"]
-size = Vector2(108.5, 20)
+[ext_resource type="Texture2D" uid="uid://d1ngfpv47mp3i" path="res://assets/sprites/loot/selected.png" id="3_5pjto"]
+[ext_resource type="Texture2D" uid="uid://cyw2h71vdn2k0" path="res://assets/sprites/loot/iron_sword.png" id="3_bgugm"]
+[ext_resource type="Script" path="res://assets/prefabs/player/count.gd" id="4_3k4us"]
+[ext_resource type="Texture2D" uid="uid://bgtkw3bn6tdue" path="res://assets/sprites/loot/master_sword.png" id="4_6xan7"]
+[ext_resource type="Texture2D" uid="uid://b6tqr2poj5jix" path="res://assets/sprites/loot/potion_2.png" id="6_yxb3x"]
+[ext_resource type="Texture2D" uid="uid://d0lfjg1jb7l7l" path="res://assets/sprites/loot/potion_3.png" id="7_itfrv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jgw54"]
 size = Vector2(112, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vqcw6"]
+size = Vector2(108.5, 20)
 
 [node name="InventoryScreen" type="Node2D"]
 
 [node name="ButtonResult" type="ButtonResult" parent="."]
 
 [node name="ButtonContainer" type="ButtonContainer" parent="."]
-buttons = Array[Array]([[NodePath("Options2"), NodePath("Options")]])
+buttons = Array[Array]([[NodePath("WoodenSword"), NodePath("IronSword"), NodePath("MasterSword"), NodePath("HealthPotion"), NodePath("PoisonPotion"), NodePath("PoisonAntidotePotion")]])
+z_index = 20
+position = Vector2(0, 23)
 
-[node name="Options" type="UIButton" parent="ButtonContainer"]
-position = Vector2(-57, -29)
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -109.0
+offset_right = 84.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.803922, 0.701961, 0.596078, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Options"]
-position = Vector2(43.75, 0)
-shape = SubResource("RectangleShape2D_vqcw6")
-
-[node name="button" type="Sprite2D" parent="ButtonContainer/Options"]
+[node name="WoodenSword" type="UIButton" parent="ButtonContainer"]
 z_index = 1
-texture = ExtResource("1_efy3j")
+position = Vector2(-57, -87)
+script = ExtResource("1_vnl3p")
 
-[node name="Text" type="RichTextLabel" parent="ButtonContainer/Options/button"]
-z_index = 21
-offset_left = 9.0
-offset_top = -3.0
-offset_right = 184.0
-offset_bottom = 17.0
-scale = Vector2(0.5, 0.5)
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_constants/line_separation = 0
-theme_override_fonts/normal_font = ExtResource("2_hx6tj")
-theme_override_font_sizes/normal_font_size = 0
-text = "Health Potion x{count}"
-fit_content = true
-
-[node name="hovered" type="Sprite2D" parent="ButtonContainer/Options"]
-visible = false
-position = Vector2(0, -1)
-
-[node name="ColorRect" type="ColorRect" parent="ButtonContainer/Options/hovered"]
-offset_left = -11.0
-offset_top = -9.0
-offset_right = 97.0
-offset_bottom = 33.0
-scale = Vector2(1, 0.48)
-color = Color(1, 0.52549, 0.396078, 1)
-
-[node name="Options2" type="UIButton" parent="ButtonContainer"]
-position = Vector2(-57, -54)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/Options2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/WoodenSword"]
 position = Vector2(45, 0)
 shape = SubResource("RectangleShape2D_jgw54")
 
-[node name="button" type="Sprite2D" parent="ButtonContainer/Options2"]
+[node name="button" type="Sprite2D" parent="ButtonContainer/WoodenSword"]
 z_index = 1
 texture = ExtResource("3_5a5mm")
 
-[node name="Text" type="RichTextLabel" parent="ButtonContainer/Options2/button"]
+[node name="Text" type="RichTextLabel" parent="ButtonContainer/WoodenSword/button"]
 z_index = 21
 offset_left = 9.0
 offset_top = -3.0
@@ -80,19 +66,345 @@ theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_constants/line_separation = 0
 theme_override_fonts/normal_font = ExtResource("2_hx6tj")
 theme_override_font_sizes/normal_font_size = 0
-text = "Wooden Sword x{count}"
+text = "Wooden Sword"
 fit_content = true
 
-[node name="hovered" type="Sprite2D" parent="ButtonContainer/Options2"]
+[node name="count" type="RichTextLabel" parent="ButtonContainer/WoodenSword/button"]
+z_index = 21
+offset_left = 122.0
+offset_top = -4.0
+offset_right = 307.0
+offset_bottom = 16.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "x{count}"
+fit_content = true
+script = ExtResource("4_3k4us")
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/WoodenSword"]
 visible = false
 position = Vector2(0, -1)
 
-[node name="ColorRect" type="ColorRect" parent="ButtonContainer/Options2/hovered"]
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer/WoodenSword/hovered"]
 offset_left = -11.0
 offset_top = -9.0
-offset_right = 101.0
+offset_right = 136.0
 offset_bottom = 33.0
 scale = Vector2(1, 0.48)
+color = Color(1, 0.52549, 0.396078, 1)
+
+[node name="Selected" type="Sprite2D" parent="ButtonContainer/WoodenSword"]
+visible = false
+position = Vector2(88, 0)
+texture = ExtResource("3_5pjto")
+
+[node name="IronSword" type="UIButton" parent="ButtonContainer"]
+z_index = 1
+position = Vector2(-57, -64)
+script = ExtResource("1_vnl3p")
+ind = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/IronSword"]
+position = Vector2(45, 0)
+shape = SubResource("RectangleShape2D_jgw54")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/IronSword"]
+z_index = 1
+texture = ExtResource("3_bgugm")
+
+[node name="Text" type="RichTextLabel" parent="ButtonContainer/IronSword/button"]
+z_index = 21
+offset_left = 9.0
+offset_top = -3.0
+offset_right = 194.0
+offset_bottom = 17.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "Iron Sword"
+fit_content = true
+
+[node name="count" type="RichTextLabel" parent="ButtonContainer/IronSword/button"]
+z_index = 21
+offset_left = 122.0
+offset_top = -4.0
+offset_right = 307.0
+offset_bottom = 16.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "x{count}"
+fit_content = true
+script = ExtResource("4_3k4us")
+ind = 1
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/IronSword"]
+visible = false
+position = Vector2(0, -1)
+
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer/IronSword/hovered"]
+offset_left = -11.0
+offset_top = -9.0
+offset_right = 136.0
+offset_bottom = 33.0
+scale = Vector2(1, 0.48)
+color = Color(1, 0.52549, 0.396078, 1)
+
+[node name="Selected" type="Sprite2D" parent="ButtonContainer/IronSword"]
+visible = false
+position = Vector2(88, 0)
+texture = ExtResource("3_5pjto")
+
+[node name="MasterSword" type="UIButton" parent="ButtonContainer"]
+z_index = 1
+position = Vector2(-57, -41)
+script = ExtResource("1_vnl3p")
+ind = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/MasterSword"]
+position = Vector2(45, 0)
+shape = SubResource("RectangleShape2D_jgw54")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/MasterSword"]
+z_index = 1
+texture = ExtResource("4_6xan7")
+
+[node name="Text" type="RichTextLabel" parent="ButtonContainer/MasterSword/button"]
+z_index = 21
+offset_left = 9.0
+offset_top = -3.0
+offset_right = 194.0
+offset_bottom = 17.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "Master Sword"
+fit_content = true
+
+[node name="count" type="RichTextLabel" parent="ButtonContainer/MasterSword/button"]
+z_index = 21
+offset_left = 122.0
+offset_top = -4.0
+offset_right = 307.0
+offset_bottom = 16.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "x{count}"
+fit_content = true
+script = ExtResource("4_3k4us")
+ind = 2
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/MasterSword"]
+visible = false
+position = Vector2(0, -1)
+
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer/MasterSword/hovered"]
+offset_left = -11.0
+offset_top = -9.0
+offset_right = 136.0
+offset_bottom = 33.0
+scale = Vector2(1, 0.48)
+color = Color(1, 0.52549, 0.396078, 1)
+
+[node name="Selected" type="Sprite2D" parent="ButtonContainer/MasterSword"]
+visible = false
+position = Vector2(88, 0)
+texture = ExtResource("3_5pjto")
+
+[node name="HealthPotion" type="UIButton" parent="ButtonContainer"]
+z_index = 1
+position = Vector2(-56, -18)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/HealthPotion"]
+position = Vector2(43.75, 0)
+shape = SubResource("RectangleShape2D_vqcw6")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/HealthPotion"]
+z_index = 1
+texture = ExtResource("1_efy3j")
+
+[node name="Text" type="RichTextLabel" parent="ButtonContainer/HealthPotion/button"]
+z_index = 21
+offset_left = 9.0
+offset_top = -3.0
+offset_right = 184.0
+offset_bottom = 17.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "Health Potion"
+fit_content = true
+
+[node name="count" type="RichTextLabel" parent="ButtonContainer/HealthPotion/button"]
+z_index = 21
+offset_left = 122.0
+offset_top = -4.0
+offset_right = 307.0
+offset_bottom = 16.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "x{count}"
+fit_content = true
+script = ExtResource("4_3k4us")
+ind = 3
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/HealthPotion"]
+visible = false
+position = Vector2(0, -1)
+
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer/HealthPotion/hovered"]
+offset_left = -11.0
+offset_top = -9.0
+offset_right = 104.0
+offset_bottom = 33.0
+scale = Vector2(1.28, 0.48)
+color = Color(1, 0.52549, 0.396078, 1)
+
+[node name="PoisonPotion" type="UIButton" parent="ButtonContainer"]
+z_index = 1
+position = Vector2(-56, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/PoisonPotion"]
+position = Vector2(43.75, 0)
+shape = SubResource("RectangleShape2D_vqcw6")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/PoisonPotion"]
+z_index = 1
+texture = ExtResource("6_yxb3x")
+
+[node name="Text" type="RichTextLabel" parent="ButtonContainer/PoisonPotion/button"]
+z_index = 21
+offset_left = 9.0
+offset_top = -3.0
+offset_right = 184.0
+offset_bottom = 17.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "Poison Potion"
+fit_content = true
+
+[node name="count" type="RichTextLabel" parent="ButtonContainer/PoisonPotion/button"]
+z_index = 21
+offset_left = 122.0
+offset_top = -4.0
+offset_right = 307.0
+offset_bottom = 16.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "x{count}"
+fit_content = true
+script = ExtResource("4_3k4us")
+ind = 4
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/PoisonPotion"]
+visible = false
+position = Vector2(0, -1)
+
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer/PoisonPotion/hovered"]
+offset_left = -11.0
+offset_top = -9.0
+offset_right = 104.0
+offset_bottom = 33.0
+scale = Vector2(1.28, 0.48)
+color = Color(1, 0.52549, 0.396078, 1)
+
+[node name="PoisonAntidotePotion" type="UIButton" parent="ButtonContainer"]
+z_index = 1
+position = Vector2(-56, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonContainer/PoisonAntidotePotion"]
+position = Vector2(43.75, 0)
+shape = SubResource("RectangleShape2D_vqcw6")
+
+[node name="button" type="Sprite2D" parent="ButtonContainer/PoisonAntidotePotion"]
+z_index = 1
+texture = ExtResource("7_itfrv")
+
+[node name="Text" type="RichTextLabel" parent="ButtonContainer/PoisonAntidotePotion/button"]
+z_index = 21
+offset_left = 9.0
+offset_top = -3.0
+offset_right = 184.0
+offset_bottom = 17.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "Poison Antidote Potion"
+fit_content = true
+
+[node name="count" type="RichTextLabel" parent="ButtonContainer/PoisonAntidotePotion/button"]
+z_index = 21
+offset_left = 122.0
+offset_top = -4.0
+offset_right = 307.0
+offset_bottom = 16.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_constants/line_separation = 0
+theme_override_fonts/normal_font = ExtResource("2_hx6tj")
+theme_override_font_sizes/normal_font_size = 0
+text = "x{count}"
+fit_content = true
+script = ExtResource("4_3k4us")
+ind = 5
+
+[node name="hovered" type="Sprite2D" parent="ButtonContainer/PoisonAntidotePotion"]
+visible = false
+position = Vector2(0, -1)
+
+[node name="ColorRect" type="ColorRect" parent="ButtonContainer/PoisonAntidotePotion/hovered"]
+offset_left = -11.0
+offset_top = -9.0
+offset_right = 104.0
+offset_bottom = 33.0
+scale = Vector2(1.28, 0.48)
 color = Color(1, 0.52549, 0.396078, 1)
 
 [node name="InteractTimer" type="Timer" parent="ButtonContainer"]
@@ -100,9 +412,27 @@ process_callback = 0
 wait_time = 0.125
 one_shot = true
 
-[connection signal="button_pressed" from="ButtonContainer/Options" to="ButtonResult" method="quit"]
-[connection signal="mouse_entered" from="ButtonContainer/Options" to="ButtonContainer/Options" method="mouse_enter"]
-[connection signal="mouse_exited" from="ButtonContainer/Options" to="ButtonContainer/Options" method="mouse_exit"]
-[connection signal="button_pressed" from="ButtonContainer/Options2" to="ButtonResult" method="options"]
-[connection signal="mouse_entered" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_enter"]
-[connection signal="mouse_exited" from="ButtonContainer/Options2" to="ButtonContainer/Options2" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/WoodenSword" to="ButtonContainer/WoodenSword" method="on_button_press"]
+[connection signal="button_pressed" from="ButtonContainer/WoodenSword" to="ButtonContainer/IronSword" method="do_shit_idc_anymore"]
+[connection signal="button_pressed" from="ButtonContainer/WoodenSword" to="ButtonContainer/MasterSword" method="do_shit_idc_anymore"]
+[connection signal="mouse_entered" from="ButtonContainer/WoodenSword" to="ButtonContainer/WoodenSword" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/WoodenSword" to="ButtonContainer/WoodenSword" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/IronSword" to="ButtonContainer/WoodenSword" method="do_shit_idc_anymore"]
+[connection signal="button_pressed" from="ButtonContainer/IronSword" to="ButtonContainer/IronSword" method="on_button_press"]
+[connection signal="button_pressed" from="ButtonContainer/IronSword" to="ButtonContainer/MasterSword" method="do_shit_idc_anymore"]
+[connection signal="mouse_entered" from="ButtonContainer/IronSword" to="ButtonContainer/IronSword" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/IronSword" to="ButtonContainer/IronSword" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/MasterSword" to="ButtonContainer/WoodenSword" method="do_shit_idc_anymore"]
+[connection signal="button_pressed" from="ButtonContainer/MasterSword" to="ButtonContainer/IronSword" method="do_shit_idc_anymore"]
+[connection signal="button_pressed" from="ButtonContainer/MasterSword" to="ButtonContainer/MasterSword" method="on_button_press"]
+[connection signal="mouse_entered" from="ButtonContainer/MasterSword" to="ButtonContainer/MasterSword" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/MasterSword" to="ButtonContainer/MasterSword" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/HealthPotion" to="ButtonResult" method="quit"]
+[connection signal="mouse_entered" from="ButtonContainer/HealthPotion" to="ButtonContainer/HealthPotion" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/HealthPotion" to="ButtonContainer/HealthPotion" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/PoisonPotion" to="ButtonResult" method="quit"]
+[connection signal="mouse_entered" from="ButtonContainer/PoisonPotion" to="ButtonContainer/PoisonPotion" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/PoisonPotion" to="ButtonContainer/PoisonPotion" method="mouse_exit"]
+[connection signal="button_pressed" from="ButtonContainer/PoisonAntidotePotion" to="ButtonResult" method="quit"]
+[connection signal="mouse_entered" from="ButtonContainer/PoisonAntidotePotion" to="ButtonContainer/PoisonAntidotePotion" method="mouse_enter"]
+[connection signal="mouse_exited" from="ButtonContainer/PoisonAntidotePotion" to="ButtonContainer/PoisonAntidotePotion" method="mouse_exit"]

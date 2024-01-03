@@ -28,7 +28,8 @@ pub struct Player {
     #[export]
     health : u32,
     inventory : Vec<u32>,
-    inventory_open : bool
+    inventory_open : bool,
+    selected_sword : u32
 }
 
 #[godot_api]
@@ -45,8 +46,8 @@ impl IRigidBody2D for Player {
             current_dialog_over : true,
             health : 100,
             inventory : vec![0,0,0,0,0,0],
-            inventory_open : false
-
+            inventory_open : false,
+            selected_sword : 0
         }
     }
 
@@ -88,7 +89,7 @@ impl IRigidBody2D for Player {
                 //godot_print!("{}", self.get_player_name())
             }
         }
-        if Input::is_action_pressed(&input, StringName::from_str("inventory").unwrap() ) && self.get_interact_timer().is_stopped() {
+        if Input::is_action_pressed(&input, StringName::from_str("inventory").unwrap() ) && self.get_interact_timer().is_stopped() && self.current_dialog_over {
             self.get_interact_timer().start();
             self.inventory_open = !self.inventory_open;
 
@@ -112,7 +113,7 @@ impl IRigidBody2D for Player {
         let mut limbo = binding.bind_mut();
         self.name = limbo.get_name();
         self.adjective = limbo.get_adjective();
-        self.health = limbo.get_health();
+        self.edit_health(limbo.get_health(), false, true);
     }
 }
 
@@ -135,6 +136,11 @@ impl Player {
         }
     }
 
+    #[func]
+    pub fn set_selected_sword(&mut self, ind : u32) {
+        self.selected_sword = ind
+    }
+
     fn get_limbo_stats(&mut self) -> Gd<LimboPlayerStats> {
         return self.rb.get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats")
     }
@@ -151,6 +157,39 @@ impl Player {
             self.rb.set_z_index(area.z_index()+1);
         }
     }
+
+    #[func]
+    pub fn get_selected_sword(&mut self) -> u32 {
+        return self.selected_sword
+    }
+
+    #[func]
+    pub fn edit_health(&mut self, amount : u32, sub : bool, set : bool) {
+        if !set {
+            if sub {
+                if self.get_health() - amount < 0 {
+                    self.set_health(0);
+                } else {
+                    self.set_health(self.get_health() - amount);
+                }
+            } else {
+                if self.get_health() + amount > 100 {
+                    self.set_health(100);
+                }
+                else {
+                    self.set_health(self.get_health() + amount);
+                }
+            }
+        }
+        else {
+            self.set_health(amount);
+        }
+        let h = self.get_health();
+        self.rb.emit_signal("health_changed".into(), &[Variant::from(h)]);
+    }
+
+    #[signal]
+    pub fn health_changed(&mut self, health : u32);
 
     #[func]
     pub fn body_entered(&mut self, mut node : Gd<Node2D>) {
@@ -206,6 +245,11 @@ impl Player {
     }
     pub fn get_inventory_screen(&mut self) ->Gd<Node2D> {
         return self.rb.get_node_as::<Node2D>("Camera2D/InventoryScreen");
+    }
+
+    #[func]
+    pub fn get_item_count(&mut self, ind : u32) -> u32 {
+        self.inventory[ind as usize]
     }
 
     pub fn set_current_dialog_over(&mut self, tf : bool) {

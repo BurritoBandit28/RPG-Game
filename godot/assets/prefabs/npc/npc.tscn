@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bciaiqlykyb4q"]
 
-[ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/test/front.png" id="1_bkmkx"]
+[ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/npc/front.png" id="1_x1ui8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivi"]
 size = Vector2(16, 9)
@@ -18,7 +18,7 @@ position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_eyivi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_bkmkx")
+texture = ExtResource("1_x1ui8")
 
 [node name="Area2D" type="Area2D" parent="."]
 

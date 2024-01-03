@@ -3,8 +3,10 @@
 
 use godot::engine::{INode, load, Node, PackedScene};
 use godot::log::godot_print;
-use godot::prelude::{Base, godot_api, GodotClass};
+use godot::prelude::{Base, Gd, godot_api, GodotClass};
 use open::that;
+use crate::button::UIButton;
+use crate::player::Player;
 
 #[derive(GodotClass)]
 #[class(base=Node)]
@@ -24,6 +26,8 @@ impl INode for ButtonResult {
 
 #[godot_api]
 impl ButtonResult {
+
+
     #[func]
     pub fn load_scene_one(&mut self) {
         let game =  load::<PackedScene>("res://assets/scenes/LevelOne.tscn");

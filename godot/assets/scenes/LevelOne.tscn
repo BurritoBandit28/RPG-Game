@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bykfknutaejdl" path="res://assets/sprites/tile-sheet/grass.png" id="1_imsnq"]
 [ext_resource type="PackedScene" uid="uid://cwcnmnhvfymht" path="res://assets/prefabs/player/player.tscn" id="2_2w2f1"]
 [ext_resource type="PackedScene" uid="uid://bciaiqlykyb4q" path="res://assets/prefabs/npc/npc.tscn" id="3_wgxrx"]
-[ext_resource type="PackedScene" uid="uid://647cti6dmsfn" path="res://assets/prefabs/Items/WoodenSword.tscn" id="4_syjgp"]
+[ext_resource type="Texture2D" uid="uid://bogjg46g83o6c" path="res://assets/sprites/characters/npc/front2.png" id="4_wyeq5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h5vgg"]
 texture = ExtResource("1_imsnq")
@@ -42,9 +42,17 @@ layer_0/tile_data = PackedInt32Array(-196613, 0, 1, -131077, 0, 1, -65541, 0, 0,
 [node name="Player" parent="." instance=ExtResource("2_2w2f1")]
 position = Vector2(-17, -41)
 
-[node name="NPC" parent="." instance=ExtResource("3_wgxrx")]
-dialog = Array[Array]([["Oh thank the gods!", "It's {pname} the {padj}!", "Our prayers have been answered", ""]])
+[node name="Jerry" parent="." instance=ExtResource("3_wgxrx")]
+dialog = Array[Array]([["Oh thank the gods.", "It's *reads script*", "{pname} the {padj}", "woo hoo...", "...", "Anyway, theres this evil bad wizard guy and we need you to like", "scrap him", "or something", "Just be quick, I have an audtion for a real production after this", "So just like, skip a few parts", "*looks back at script* Okay, go find my friend Jemma", "She's not that enthusiastic", "unlike myself", "Follow the path and find her", "...", "please leave"], ["Dude, just", "Follow the path"]])
 position = Vector2(197, -62)
 
-[node name="WoodenSword" parent="." instance=ExtResource("4_syjgp")]
-position = Vector2(87, -38)
+[node name="NotJerry" parent="." instance=ExtResource("3_wgxrx")]
+name = "Jemma"
+character = "Gloomy Elf"
+dialog = Array[Array]([["OMG HAIIIIII", "SIR {pname} {upper}", "THE MOST {padj} IN ALL THE LAND {upper}", "I mean", "Hooraayyy.... you are saving us. yeah", "(cant believe I got this role)", "mkay, anyway take this stuff", "*Jemma gave you [0,1], [5,1] and [3,2] *"], ["Okay you got the sword, can you like", "Get the wizard now?", "Please?"]])
+position = Vector2(356, -152)
+
+[node name="Sprite2D" parent="NotJerry" index="1"]
+texture = ExtResource("4_wyeq5")
+
+[editable path="NotJerry"]
