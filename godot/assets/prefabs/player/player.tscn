@@ -1,11 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://cwcnmnhvfymht"]
+[gd_scene load_steps=15 format=3 uid="uid://cwcnmnhvfymht"]
 
 [ext_resource type="FontFile" uid="uid://ceggse342ekt5" path="res://assets/sprites/misc/Minecraft.ttf" id="2_3xt3o"]
 [ext_resource type="Texture2D" uid="uid://ccocss1silckh" path="res://assets/sprites/misc/textbox.png" id="2_w1hnk"]
 [ext_resource type="Texture2D" uid="uid://bg44sug3n6tth" path="res://assets/sprites/misc/nametag.png" id="3_jneeq"]
 [ext_resource type="Texture2D" uid="uid://dh6ok0g6m48vb" path="res://assets/sprites/misc/heart.png" id="4_upv1f"]
 [ext_resource type="Script" path="res://assets/prefabs/player/ChangeHealthIndicator.gd" id="5_evw4b"]
-[ext_resource type="Texture2D" uid="uid://ww0ibr3rrpo8" path="res://assets/sprites/characters/npc/front.png" id="6_kbhi7"]
+[ext_resource type="Texture2D" uid="uid://70yejf8a5o6s" path="res://assets/sprites/characters/wizrd/wizard.png" id="6_4vb3w"]
+[ext_resource type="Texture2D" uid="uid://uhch5px7y0e2" path="res://assets/sprites/characters/wizrd/eyes/angry.png" id="7_h30rf"]
+[ext_resource type="Texture2D" uid="uid://bl5a5nhfwhykl" path="res://assets/sprites/characters/wizrd/eyes/neutral.png" id="8_ikgds"]
+[ext_resource type="Texture2D" uid="uid://b0qmqulyx3nwj" path="res://assets/sprites/characters/wizrd/eyes/idgaf.png" id="8_q6st8"]
+[ext_resource type="Texture2D" uid="uid://blhgua76wdyqe" path="res://assets/sprites/characters/wizrd/eyes/sus.png" id="9_6s3to"]
+[ext_resource type="Texture2D" uid="uid://bdxb45nhy2103" path="res://assets/sprites/characters/wizrd/eyes/sigh.png" id="9_8h6s1"]
+[ext_resource type="Texture2D" uid="uid://vg4vt7bfe5ht" path="res://assets/sprites/characters/player/player.png" id="12_gw3kj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyivi"]
 size = Vector2(16, 9)
@@ -65,6 +71,7 @@ theme_override_font_sizes/normal_font_size = 0
 fit_content = true
 
 [node name="Health" type="Sprite2D" parent="Camera2D"]
+z_index = 10
 position = Vector2(114, -63)
 texture = ExtResource("4_upv1f")
 
@@ -85,13 +92,48 @@ text = "100"
 fit_content = true
 script = ExtResource("5_evw4b")
 
+[node name="Wizard" type="Sprite2D" parent="Camera2D"]
+visible = false
+z_index = 4
+position = Vector2(5, -1)
+scale = Vector2(2, 2)
+texture = ExtResource("6_4vb3w")
+
+[node name="back" type="ColorRect" parent="Camera2D/Wizard"]
+z_index = 2
+z_as_relative = false
+offset_left = -114.0
+offset_top = -42.0
+offset_right = 101.0
+offset_bottom = 47.0
+color = Color(0.215686, 0.215686, 0.215686, 0.54902)
+
+[node name="angry" type="Sprite2D" parent="Camera2D/Wizard"]
+visible = false
+texture = ExtResource("7_h30rf")
+
+[node name="idgaf" type="Sprite2D" parent="Camera2D/Wizard"]
+visible = false
+texture = ExtResource("8_q6st8")
+
+[node name="sigh" type="Sprite2D" parent="Camera2D/Wizard"]
+visible = false
+texture = ExtResource("9_8h6s1")
+
+[node name="neutral" type="Sprite2D" parent="Camera2D/Wizard"]
+texture = ExtResource("8_ikgds")
+
+[node name="sus" type="Sprite2D" parent="Camera2D/Wizard"]
+visible = false
+texture = ExtResource("9_6s3to")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
 position = Vector2(0, 10.5)
 shape = SubResource("RectangleShape2D_eyivi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("6_kbhi7")
+texture = ExtResource("12_gw3kj")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 23)

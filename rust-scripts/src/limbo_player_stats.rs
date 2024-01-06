@@ -18,7 +18,8 @@ pub struct LimboPlayerStats{
     adjective : GString,
     #[export]
     health : u32,
-
+    inventory : Vec<u32>,
+    selected_sword : u32
 
 }
 
@@ -31,7 +32,9 @@ impl INode for LimboPlayerStats {
             base,
             name : GString::from("Jilly Tismond"),
             adjective : GString::from("Brave"),
-            health : 100
+            health : 100,
+            inventory : vec![0,0,0,0,0,0],
+            selected_sword : 0
         }
     }
 
@@ -40,5 +43,20 @@ impl INode for LimboPlayerStats {
 #[godot_api]
 impl LimboPlayerStats {
 
+    pub fn set_inventory(&mut self, inv : Vec<u32>) {
+        self.inventory = inv
+    }
+    pub fn get_inventory(&mut self) -> Vec<u32> {
+        self.inventory.clone()
+    }
 
+    #[func]
+    pub fn set_selected_sword(&mut self, sel: u32) {
+        self.selected_sword = sel
+    }
+
+    #[func]
+    pub fn get_selected_sword(&mut self) -> u32 {
+        self.selected_sword
+    }
 }

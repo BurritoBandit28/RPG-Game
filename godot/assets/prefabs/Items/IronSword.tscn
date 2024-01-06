@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk143hbh28nj4"]
+
+[ext_resource type="Texture2D" uid="uid://cyw2h71vdn2k0" path="res://assets/sprites/loot/iron_sword.png" id="1_bera4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6f8f0"]
+size = Vector2(32, 32)
+
+[node name="IronSword" type="FloorItem"]
+index = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bera4")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6f8f0")

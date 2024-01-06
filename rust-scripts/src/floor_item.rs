@@ -2,7 +2,7 @@ use std::convert::Into;
 use godot::bind::{godot_api, GodotClass};
 use godot::builtin::{Array, GString, VariantArray};
 use godot::engine::{Area2D, IArea2D, IStaticBody2D, Node2D, StaticBody2D};
-use godot::obj::Base;
+use godot::obj::{Base, WithBaseField};
 use crate::player::Player;
 
 #[derive(GodotClass)]
@@ -42,7 +42,7 @@ impl FloorItem {
         player.get_text_box().set_visible(!player.get_current_dialog_over());
         if !player.get_current_dialog_over() {
             player.add_inventory(self.index as usize, self.amount);
-            self.node.queue_free();
+            self.base_mut().queue_free();
         }
         let x = !player.get_current_dialog_over();
         player.set_current_dialog_over(x);

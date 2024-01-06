@@ -3,6 +3,7 @@
 
 use godot::engine::{INode, load, Node, PackedScene};
 use godot::log::godot_print;
+use godot::obj::WithBaseField;
 use godot::prelude::{Base, Gd, godot_api, GodotClass};
 use open::that;
 use crate::button::UIButton;
@@ -31,12 +32,12 @@ impl ButtonResult {
     #[func]
     pub fn load_scene_one(&mut self) {
         let game =  load::<PackedScene>("res://assets/scenes/LevelOne.tscn");
-        self.base.tree().unwrap().change_scene_to_packed(game);
+        self.base().get_tree().unwrap().change_scene_to_packed(game);
     }
     #[func]
     pub fn play(&mut self) {
         let game =  load::<PackedScene>("res://assets/scenes/ChooseName.tscn");
-        self.base.tree().unwrap().change_scene_to_packed(game);
+        self.base().get_tree().unwrap().change_scene_to_packed(game);
     }
 
     #[func]
@@ -46,7 +47,7 @@ impl ButtonResult {
 
     #[func]
     pub fn quit(&mut self) {
-        godot_print!("quit")
+        self.base_mut().get_tree().unwrap().quit();
     }
 
     #[func]

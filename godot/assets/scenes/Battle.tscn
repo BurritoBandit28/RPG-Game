@@ -1,0 +1,201 @@
+[gd_scene load_steps=16 format=3 uid="uid://bp14p8x55inrg"]
+
+[ext_resource type="Texture2D" uid="uid://bpw7kyo2f5y12" path="res://assets/sprites/misc/battle_spot.png" id="1_82txn"]
+[ext_resource type="Texture2D" uid="uid://h83pkcmigmp8" path="res://assets/sprites/menu/fight/hovered.png" id="1_vcqc4"]
+[ext_resource type="Texture2D" uid="uid://d0j2qyphjftne" path="res://assets/sprites/menu/fight/rock.png" id="2_0k2g2"]
+[ext_resource type="Texture2D" uid="uid://n0fnmj2opqyy" path="res://assets/sprites/menu/fight/scissors.png" id="3_bif73"]
+[ext_resource type="Texture2D" uid="uid://p0mjtwwktm4g" path="res://assets/sprites/menu/fight/paper.png" id="4_etmdx"]
+[ext_resource type="Texture2D" uid="uid://70yejf8a5o6s" path="res://assets/sprites/characters/wizrd/wizard.png" id="4_vu302"]
+[ext_resource type="Texture2D" uid="uid://uhch5px7y0e2" path="res://assets/sprites/characters/wizrd/eyes/angry.png" id="5_5vig6"]
+[ext_resource type="FontFile" uid="uid://ceggse342ekt5" path="res://assets/sprites/misc/Minecraft.ttf" id="5_xesui"]
+[ext_resource type="Texture2D" uid="uid://b0qmqulyx3nwj" path="res://assets/sprites/characters/wizrd/eyes/idgaf.png" id="6_4s1br"]
+[ext_resource type="Texture2D" uid="uid://bdxb45nhy2103" path="res://assets/sprites/characters/wizrd/eyes/sigh.png" id="7_bijwo"]
+[ext_resource type="Texture2D" uid="uid://bl5a5nhfwhykl" path="res://assets/sprites/characters/wizrd/eyes/neutral.png" id="8_jshet"]
+[ext_resource type="Texture2D" uid="uid://cjijil7tt1kfl" path="res://assets/sprites/characters/wizrd/eyes/shit.png" id="9_u2mbc"]
+[ext_resource type="Texture2D" uid="uid://blhgua76wdyqe" path="res://assets/sprites/characters/wizrd/eyes/sus.png" id="9_u4f3f"]
+[ext_resource type="Texture2D" uid="uid://bjbxei5scectl" path="res://assets/sprites/characters/player/battle.png" id="10_gn4wc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a3law"]
+size = Vector2(32, 32)
+
+[node name="Battle" type="Node2D"]
+
+[node name="BattleController" type="BattleController" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="BattleController"]
+z_index = -1
+offset_left = -162.0
+offset_top = -22.0
+offset_right = 168.0
+offset_bottom = 99.0
+color = Color(0.541176, 0.478431, 0.643137, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="BattleController"]
+z_index = -1
+offset_left = -162.0
+offset_top = -143.0
+offset_right = 168.0
+offset_bottom = -22.0
+color = Color(0.188235, 0.262745, 0.392157, 1)
+
+[node name="BattleBar" type="ColorRect" parent="BattleController"]
+z_index = -1
+offset_left = -115.0
+offset_top = 22.0
+offset_right = 115.0
+offset_bottom = 65.0
+color = Color(0.4, 0.427451, 0.427451, 1)
+
+[node name="inner" type="ColorRect" parent="BattleController/BattleBar"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 228.0
+offset_bottom = 41.0
+color = Color(0.827451, 0.843137, 0.843137, 1)
+
+[node name="ButtonContainer" type="ButtonContainer" parent="BattleController/BattleBar/inner"]
+buttons = Array[Array]([[NodePath("Rock")], [NodePath("Scissors")], [NodePath("Paper")]])
+
+[node name="InteractTimer" type="Timer" parent="BattleController/BattleBar/inner/ButtonContainer"]
+wait_time = 0.25
+one_shot = true
+autostart = true
+
+[node name="ButtonResult" type="ButtonResult" parent="BattleController/BattleBar/inner/ButtonContainer"]
+
+[node name="Rock" type="UIButton" parent="BattleController/BattleBar/inner/ButtonContainer"]
+position = Vector2(130, 20)
+
+[node name="hovered" type="Sprite2D" parent="BattleController/BattleBar/inner/ButtonContainer/Rock"]
+texture = ExtResource("1_vcqc4")
+
+[node name="button" type="Sprite2D" parent="BattleController/BattleBar/inner/ButtonContainer/Rock"]
+texture = ExtResource("2_0k2g2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleController/BattleBar/inner/ButtonContainer/Rock"]
+shape = SubResource("RectangleShape2D_a3law")
+
+[node name="Scissors" type="UIButton" parent="BattleController/BattleBar/inner/ButtonContainer"]
+position = Vector2(164, 20)
+
+[node name="hovered" type="Sprite2D" parent="BattleController/BattleBar/inner/ButtonContainer/Scissors"]
+visible = false
+z_index = 1
+texture = ExtResource("1_vcqc4")
+
+[node name="button" type="Sprite2D" parent="BattleController/BattleBar/inner/ButtonContainer/Scissors"]
+texture = ExtResource("3_bif73")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleController/BattleBar/inner/ButtonContainer/Scissors"]
+shape = SubResource("RectangleShape2D_a3law")
+
+[node name="Paper" type="UIButton" parent="BattleController/BattleBar/inner/ButtonContainer"]
+position = Vector2(198, 20)
+
+[node name="hovered" type="Sprite2D" parent="BattleController/BattleBar/inner/ButtonContainer/Paper"]
+visible = false
+z_index = 1
+texture = ExtResource("1_vcqc4")
+
+[node name="button" type="Sprite2D" parent="BattleController/BattleBar/inner/ButtonContainer/Paper"]
+texture = ExtResource("4_etmdx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleController/BattleBar/inner/ButtonContainer/Paper"]
+shape = SubResource("RectangleShape2D_a3law")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BattleController/BattleBar/inner"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 233.0
+offset_bottom = 75.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0.4, 0.427451, 0.427451, 1)
+theme_override_fonts/normal_font = ExtResource("5_xesui")
+text = "What will you choose?
+Rock, paper or scissors?"
+
+[node name="Spot" type="Sprite2D" parent="BattleController"]
+position = Vector2(73, -26)
+texture = ExtResource("1_82txn")
+
+[node name="Wizard" type="Sprite2D" parent="BattleController/Spot"]
+texture = ExtResource("4_vu302")
+
+[node name="angry" type="Sprite2D" parent="BattleController/Spot/Wizard"]
+visible = false
+texture = ExtResource("5_5vig6")
+
+[node name="shit" type="Sprite2D" parent="BattleController/Spot/Wizard"]
+visible = false
+position = Vector2(1, 0)
+texture = ExtResource("9_u2mbc")
+
+[node name="idgaf" type="Sprite2D" parent="BattleController/Spot/Wizard"]
+visible = false
+texture = ExtResource("6_4s1br")
+
+[node name="sigh" type="Sprite2D" parent="BattleController/Spot/Wizard"]
+visible = false
+texture = ExtResource("7_bijwo")
+
+[node name="neutral" type="Sprite2D" parent="BattleController/Spot/Wizard"]
+texture = ExtResource("8_jshet")
+
+[node name="sus" type="Sprite2D" parent="BattleController/Spot/Wizard"]
+visible = false
+texture = ExtResource("9_u4f3f")
+
+[node name="Battle" type="Sprite2D" parent="BattleController"]
+position = Vector2(-83, -10)
+texture = ExtResource("10_gn4wc")
+
+[node name="Camera2D" type="Camera2D" parent="BattleController"]
+zoom = Vector2(5, 5)
+
+[node name="player_paper" type="Sprite2D" parent="BattleController"]
+visible = false
+z_index = 7
+position = Vector2(-52, -10)
+texture = ExtResource("4_etmdx")
+
+[node name="player_scissors" type="Sprite2D" parent="BattleController"]
+visible = false
+z_index = 7
+position = Vector2(-52, -10)
+texture = ExtResource("3_bif73")
+
+[node name="player_rock" type="Sprite2D" parent="BattleController"]
+visible = false
+z_index = 7
+position = Vector2(-52, -10)
+texture = ExtResource("2_0k2g2")
+
+[node name="enemy_paper" type="Sprite2D" parent="BattleController"]
+visible = false
+z_index = 7
+position = Vector2(38, -38)
+scale = Vector2(-1, -1)
+texture = ExtResource("4_etmdx")
+
+[node name="enemy_scissors" type="Sprite2D" parent="BattleController"]
+visible = false
+z_index = 7
+position = Vector2(38, -38)
+scale = Vector2(-1, -1)
+texture = ExtResource("3_bif73")
+
+[node name="enemy_rock" type="Sprite2D" parent="BattleController"]
+visible = false
+z_index = 7
+position = Vector2(38, -38)
+scale = Vector2(-1, -1)
+texture = ExtResource("2_0k2g2")
+
+[connection signal="button_pressed" from="BattleController/BattleBar/inner/ButtonContainer/Rock" to="BattleController" method="rock"]
+[connection signal="button_pressed" from="BattleController/BattleBar/inner/ButtonContainer/Rock" to="BattleController/BattleBar/inner/ButtonContainer" method="toggle"]
+[connection signal="button_pressed" from="BattleController/BattleBar/inner/ButtonContainer/Scissors" to="BattleController" method="scissors"]
+[connection signal="button_pressed" from="BattleController/BattleBar/inner/ButtonContainer/Scissors" to="BattleController/BattleBar/inner/ButtonContainer" method="toggle"]
+[connection signal="button_pressed" from="BattleController/BattleBar/inner/ButtonContainer/Paper" to="BattleController" method="paper"]
+[connection signal="button_pressed" from="BattleController/BattleBar/inner/ButtonContainer/Paper" to="BattleController/BattleBar/inner/ButtonContainer" method="toggle"]

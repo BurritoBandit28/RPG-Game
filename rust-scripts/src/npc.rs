@@ -58,6 +58,7 @@ impl NPC  {
             self.current_line = 0;
             self.current_dialog+=1;
             player.set_current_dialog_over(true);
+            player.show_wizard(false);
            return;
         }
         else {
@@ -79,12 +80,43 @@ impl NPC  {
     fn insert_variables(&mut self, text : GString, player : &mut Player) -> GString {
         let mut upper = false;
         let mut str : String = text.to_string();
+
+        if str.contains("{battle}") {
+            player.set_current_dialog_over(false);
+            player.get_text_box().set_visible(true);
+            player.get_name_tag().set_visible(true);
+            let game =  load::<PackedScene>("res://assets/scenes/Battle.tscn");
+            self.base().get_tree().unwrap().change_scene_to_packed(game);
+        }
+
+
         str = str.replace("{name}", self.name.to_string().as_str());
         str = str.replace("{character}", self.character.to_string().as_str());
         str = str.replace("{pname}", player.get_name().to_string().as_str());
         str = str.replace("{padj}", player.get_adjective().to_string().as_str());
+
         if str.contains("{upper}") {upper = true}
         str = str.replace(" {upper}", "");
+
+        if str.contains("{wiz}") {player.show_wizard(true)}
+        else { player.show_wizard(false) }
+        str = str.replace(" {wiz}", "");
+
+        if str.contains("{sus}") {player.set_wiz_sus()}
+        str = str.replace(" {sus}", "");
+
+        if str.contains("{angry}") {player.set_wiz_angry()}
+        str = str.replace(" {angry}", "");
+
+        if str.contains("{neutral}") {player.set_wiz_neutral()}
+        str = str.replace(" {neutral}", "");
+
+        if str.contains("{idgaf}") {player.set_wiz_idgaf()}
+        str = str.replace(" {idgaf}", "");
+
+        if str.contains("{sigh}") {player.set_wiz_sigh()}
+        str = str.replace(" {sigh}", "");
+
         let mut ls = str.split(" ");
         let mut ret_str : String = String::new();
 

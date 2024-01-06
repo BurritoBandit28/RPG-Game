@@ -4,14 +4,16 @@ extends UIButton
 
 
 func _ready():
-	var player : Player = get_parent().get_parent().get_parent().get_parent()
+	var player : LimboPlayerStats = get_node("/root/GlobalLimboPlayerStats")
 	var select : Sprite2D = get_node("Selected")
-
+	
+	print(player.get_selected_sword())
+	
 	if ind == player.get_selected_sword():
 		select.visible = true
 
 func on_button_press():
-	var player : Player = get_parent().get_parent().get_parent().get_parent()
+	var player : LimboPlayerStats = get_node("/root/GlobalLimboPlayerStats")
 	player.set_selected_sword(ind)	
 	_ready()
 	

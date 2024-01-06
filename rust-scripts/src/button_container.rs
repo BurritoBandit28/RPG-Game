@@ -3,6 +3,7 @@ use godot::bind::godot_api;
 use godot::builtin::{NodePath, StringName, VariantArray};
 use godot::engine::{INode, INode2D, Input, Node, Node2D, NodeExt, Timer};
 use godot::log::godot_print;
+use godot::obj::WithBaseField;
 use godot::prelude::{Array, Base, Gd, GodotClass};
 use godot::private::You_forgot_the_attribute__godot_api;
 use crate::button::UIButton;
@@ -16,7 +17,9 @@ pub struct ButtonContainer{
     #[export]
     buttons : Array<VariantArray>,
     row : usize,
-    column : usize
+    column : usize,
+    #[export]
+    enabled : bool
 
 }
 
@@ -29,13 +32,14 @@ impl INode2D for ButtonContainer {
             base,
             buttons : Array::new(),
             row : 0,
-            column : 0
+            column : 0,
+            enabled : true
         }
     }
 
     // what happens each frame
     fn process(&mut self, _ : f64) {
-        if self.get_interact_timer().is_stopped() {
+        if self.get_interact_timer().is_stopped() && self.enabled {
             let input = Input::singleton();
 
             // save previous hovered button
@@ -98,9 +102,9 @@ impl INode2D for ButtonContainer {
 
             // get nodes
             // previous
-            let mut prev: Gd<UIButton> = self.base.get_node_as::<UIButton>(self.buttons.get(prevc).get(prevr).try_to::<NodePath>().unwrap().to_string());
+            let mut prev: Gd<UIButton> = self.base().get_node_as::<UIButton>(self.buttons.get(prevc).get(prevr).try_to::<NodePath>().unwrap().to_string());
             // current
-            let mut new: Gd<UIButton> = self.base.get_node_as::<UIButton>(self.buttons.get(self.column).get(self.row).try_to::<NodePath>().unwrap().to_string());
+            let mut new: Gd<UIButton> = self.base().get_node_as::<UIButton>(self.buttons.get(self.column).get(self.row).try_to::<NodePath>().unwrap().to_string());
 
             // if they are the same do nothing
             if &prev == &new {
@@ -120,6 +124,16 @@ impl INode2D for ButtonContainer {
 #[godot_api]
 impl ButtonContainer {
 
+    pub fn enabled(&mut self, tf : bool) {
+        self.enabled = tf;
+    }
+
+    #[func]
+    pub fn toggle(&mut self) {
+        self.enabled = !self.enabled
+    }
+
+
     // this exists to make sure rows are correctly selected when moving selection left or right
     pub fn fix_row(&mut self) {
         let mut ind : usize;
@@ -130,6 +144,6 @@ impl ButtonContainer {
         }
     }
     pub fn get_interact_timer(&mut self) -> Gd<Timer> {
-        return self.base.get_node_as::<Timer>("InteractTimer");
+        return self.base().get_node_as::<Timer>("InteractTimer");
     }
 }

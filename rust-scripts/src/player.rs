@@ -80,8 +80,8 @@ impl IRigidBody2D for Player {
                     (*self).facing = Facing::UP;
                 }
                 vel.normalized();
-                self.rb.set_linear_velocity(vel);
-                let mut ray = &mut self.rb.get_node_as::<RayCast2D>("RayCast2D");
+                self.base_mut().set_linear_velocity(vel);
+                let mut ray = &mut self.base().get_node_as::<RayCast2D>("RayCast2D");
                 ray.set_rotation_degrees(self.facing.to_rot());
             }
             if Input::is_action_pressed(&input, StringName::from_str("interact").unwrap()) && self.get_interact_timer().is_stopped() {
@@ -97,10 +97,6 @@ impl IRigidBody2D for Player {
 
                 let inventory_screen = load::<PackedScene>("res://assets/prefabs/player/inventory_screen.tscn").instantiate();
                 self.get_camera().add_child(inventory_screen.unwrap());
-
-                for x in 0..self.inventory.len() {
-                    godot_print!("{} x{}", Item::empty().lookup(x).get_name(), self.inventory[x])
-                }
             }
             else {
                 self.get_inventory_screen().free();
@@ -114,6 +110,8 @@ impl IRigidBody2D for Player {
         self.name = limbo.get_name();
         self.adjective = limbo.get_adjective();
         self.edit_health(limbo.get_health(), false, true);
+        self.inventory = limbo.get_inventory();
+        self.selected_sword = limbo.get_selected_sword()
     }
 }
 
@@ -124,7 +122,8 @@ impl Player {
 
 
     pub fn add_inventory(&mut self, index : usize, amount : u32) {
-        self.inventory[index]+=amount
+        self.inventory[index]+=amount;
+        self.save_stats();
     }
     pub fn take_inventory(&mut self, index : usize, amount : u32) -> Result<(), ()> {
         if self.inventory[index] < amount {
@@ -132,6 +131,7 @@ impl Player {
         }
         else {
             self.inventory[index] -=amount;
+            self.save_stats();
             Ok(())
         }
     }
@@ -142,20 +142,72 @@ impl Player {
     }
 
     fn get_limbo_stats(&mut self) -> Gd<LimboPlayerStats> {
-        return self.rb.get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats")
+        return self.base().get_node_as::<LimboPlayerStats>("/root/GlobalLimboPlayerStats")
     }
     #[func]
     pub fn save_stats(&mut self) {
         let mut binding = self.get_limbo_stats();
         let mut limbo = binding.bind_mut();
         limbo.set_health(self.health);
+        limbo.set_inventory(self.inventory.clone());
+        limbo.set_selected_sword(self.selected_sword)
     }
 
     #[func]
     pub fn area_entered(&mut self, mut area : Gd<Area2D>) {
-        if area.z_index() > self.rb.z_index() || area.z_index() == self.rb.z_index() {
-            self.rb.set_z_index(area.z_index()+1);
+        if area.get_z_index() > self.base().get_z_index() || area.get_z_index() == self.base().get_z_index() {
+            self.base_mut().set_z_index(area.get_z_index()+1);
         }
+    }
+
+    #[func]
+    pub fn show_wizard(&mut self, tf : bool) {
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard").set_visible(tf);
+
+    }
+
+    #[func]
+    pub fn set_wiz_angry(&mut self) {
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/angry").set_visible(true);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sus").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/neutral").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/idgaf").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sigh").set_visible(false);
+    }
+
+    #[func]
+    pub fn set_wiz_sus(&mut self) {
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/angry").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sus").set_visible(true);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/neutral").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/idgaf").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sigh").set_visible(false);
+    }
+
+    #[func]
+    pub fn set_wiz_neutral(&mut self) {
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/angry").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sus").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/neutral").set_visible(true);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/idgaf").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sigh").set_visible(false);
+    }
+    #[func]
+    pub fn set_wiz_idgaf(&mut self) {
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/angry").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sus").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/neutral").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/idgaf").set_visible(true);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sigh").set_visible(false);
+    }
+
+    #[func]
+    pub fn set_wiz_sigh(&mut self) {
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/angry").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sus").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/neutral").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/idgaf").set_visible(false);
+        self.base().get_node_as::<Sprite2D>("Camera2D/Wizard/sigh").set_visible(true);
     }
 
     #[func]
@@ -185,7 +237,7 @@ impl Player {
             self.set_health(amount);
         }
         let h = self.get_health();
-        self.rb.emit_signal("health_changed".into(), &[Variant::from(h)]);
+        self.base_mut().emit_signal("health_changed".into(), &[Variant::from(h)]);
     }
 
     #[signal]
@@ -194,57 +246,61 @@ impl Player {
     #[func]
     pub fn body_entered(&mut self, mut node : Gd<Node2D>) {
 
-        if node.get_class() == GString::from("Player") {
+        if node.get_class() == GString::from("Player") || node.get_class() == GString::from("StaticBody2D") {
             return;
         }
-        if node.global_transform().origin.y < self.rb.global_transform().origin.y {
-            if node.z_index() > self.rb.z_index() {
-                let z = node.z_index();
-                node.set_z_index(self.rb.z_index());
-                self.rb.set_z_index(z);
+        if node.get_global_transform().origin.y < self.base().get_global_transform().origin.y {
+            if node.get_z_index() > self.base().get_z_index() {
+                let z = node.get_z_index();
+                node.set_z_index(self.base().get_z_index());
+                self.base_mut().set_z_index(z);
             }
-            if node.z_index() == self.rb.z_index() {
-                let x= self.rb.z_index()+1;
-                self.rb.set_z_index(x);
+            if node.get_z_index() == self.base().get_z_index() {
+                let x= self.base().get_z_index()+1;
+                self.base_mut().set_z_index(x);
             }
         }
-        else if node.global_transform().origin.y > self.rb.global_transform().origin.y{
-            if node.z_index() < self.rb.z_index() {
-                let z = self.rb.z_index();
-                self.rb.set_z_index(node.z_index());
+        else if node.get_global_transform().origin.y > self.base().get_global_transform().origin.y{
+            if node.get_z_index() < self.base().get_z_index() {
+                let z = self.base().get_z_index();
+                self.base_mut().set_z_index(node.get_z_index());
                 node.set_z_index(z);
             }
-            if node.z_index() == self.rb.z_index() {
-                let x= node.z_index()+1;
+            if node.get_z_index() == self.base().get_z_index() {
+                let x= node.get_z_index()+1;
                 node.set_z_index(x);
             }
         }
     }
 
     pub fn get_interact_timer(&mut self) -> Gd<Timer> {
-        return self.rb.get_node_as::<Timer>("InteractTimer");
+        return self.base().get_node_as::<Timer>("InteractTimer");
     }
 
     pub fn get_camera(&mut self) -> Gd<Camera2D> {
-        return self.rb.get_node_as::<Camera2D>("Camera2D");
+        return self.base().get_node_as::<Camera2D>("Camera2D");
     }
 
     pub fn get_text(&mut self) -> Gd<RichTextLabel> {
-        return self.rb.get_node_as::<RichTextLabel>("Camera2D/TextBox/Text");
+        return self.base().get_node_as::<RichTextLabel>("Camera2D/TextBox/Text");
     }
     pub fn get_text_box(&mut self) -> Gd<Sprite2D> {
-        return self.rb.get_node_as::<Sprite2D>("Camera2D/TextBox");
+        return self.base().get_node_as::<Sprite2D>("Camera2D/TextBox");
     }
 
     pub fn get_name_tag(&mut self) -> Gd<Sprite2D> {
-        return self.rb.get_node_as::<Sprite2D>("Camera2D/NameTag");
+        return self.base().get_node_as::<Sprite2D>("Camera2D/NameTag");
     }
 
     pub fn get_name_tag_text(&mut self) ->Gd<RichTextLabel> {
-        return self.rb.get_node_as::<RichTextLabel>("Camera2D/NameTag/Text");
+        return self.base().get_node_as::<RichTextLabel>("Camera2D/NameTag/Text");
     }
     pub fn get_inventory_screen(&mut self) ->Gd<Node2D> {
-        return self.rb.get_node_as::<Node2D>("Camera2D/InventoryScreen");
+        return self.base().get_node_as::<Node2D>("Camera2D/InventoryScreen");
+    }
+
+    pub fn get_inventory(&mut self) -> Vec<u32> {
+        self.inventory.clone()
     }
 
     #[func]
@@ -271,11 +327,11 @@ impl Player {
                 return;
             }
         }
-        let mut ray = &mut self.rb.get_node_as::<RayCast2D>("RayCast2D");
+        let mut ray = &mut self.base().get_node_as::<RayCast2D>("RayCast2D");
 
         if ray.is_colliding() {
 
-            let mut hit = &ray.collider().unwrap().cast::<Node>().parent().unwrap();
+            let mut hit = &ray.get_collider().unwrap().cast::<Node>().get_parent().unwrap();
 
             // not the sleekest implementation... but it works and thats the important part
             match hit.clone().get_class().to_string().as_str() {
@@ -300,8 +356,6 @@ impl Player {
         // without this call the memory goes all "oopsie I did a fucky >~<"
         //ray.queue_free();
         // actually nvm its handled by godot if I call that it actually fucks up more lol
-
-
     }
 
     /*

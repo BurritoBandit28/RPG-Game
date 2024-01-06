@@ -87,7 +87,6 @@ fit_content = true
 script = ExtResource("4_3k4us")
 
 [node name="hovered" type="Sprite2D" parent="ButtonContainer/WoodenSword"]
-visible = false
 position = Vector2(0, -1)
 
 [node name="ColorRect" type="ColorRect" parent="ButtonContainer/WoodenSword/hovered"]

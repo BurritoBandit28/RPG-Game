@@ -89,7 +89,6 @@ texture = ExtResource("2_nasq5")
 texture = ExtResource("3_8452y")
 
 [node name="hovered" type="Sprite2D" parent="ButtonContainer/Play"]
-visible = false
 position = Vector2(0, -1)
 texture = ExtResource("4_lg1v0")
 

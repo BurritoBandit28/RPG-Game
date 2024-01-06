@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4c4yhtt4ohcm"]
+
+[ext_resource type="Texture2D" uid="uid://b6tqr2poj5jix" path="res://assets/sprites/loot/potion_2.png" id="1_jqyqn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6f8f0"]
+size = Vector2(32, 32)
+
+[node name="PoisonPotion" type="FloorItem"]
+index = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jqyqn")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6f8f0")
